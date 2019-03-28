@@ -5,7 +5,6 @@ import {
   addNewLicensePlates,
   getPlates,
   updateLicensePlates,
-  closeDialog,
   deleteLicensePlates
 } from "../../actions/profileAction";
 import { withRouter } from "react-router-dom";
@@ -23,6 +22,7 @@ import CreateLicensePlates from "./CreateLicensePlates";
 import NumberFormat from "react-number-format";
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
+import swal from "sweetalert";
 
 class DetailProfile extends Component {
   componentDidMount() {
@@ -30,10 +30,21 @@ class DetailProfile extends Component {
   }
 
   deleteLicensePlates = id => {
-    if(window.confirm("Bạn có chắc chắn muốn xóa ?")){
-      this.props.deleteLicensePlates(id)
-    }
-  }
+    swal({
+      title: "Bạn có chắn chắn?",
+      text: "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(willDelete => {
+      if (willDelete) {
+        swal("Xóa thành công", {
+          icon: "success"
+        });
+        this.props.deleteLicensePlates(id);
+      }
+    });
+  };
 
   render() {
     const {
@@ -43,7 +54,7 @@ class DetailProfile extends Component {
       plates,
       updateLicensePlates,
       getPlates,
-      closeDialog
+      isAuthenticated
     } = this.props;
 
     return (
@@ -54,7 +65,7 @@ class DetailProfile extends Component {
           errors={errors}
           plates={plates}
           updateLicensePlates={updateLicensePlates}
-          closeDialog={closeDialog}
+          isAuthenticated={isAuthenticated}
         />
 
         <Typography
@@ -125,7 +136,8 @@ class DetailProfile extends Component {
 const mapStateToProps = state => ({
   profiles: state.project.profiles,
   errors: state.error,
-  plates: state.project.plates
+  plates: state.project.plates,
+  isAuthenticated: state.project.isAuthenticated
 });
 
 export default connect(
@@ -135,7 +147,6 @@ export default connect(
     addNewLicensePlates,
     getPlates,
     updateLicensePlates,
-    closeDialog,
     deleteLicensePlates
   }
 )(withRouter(DetailProfile));

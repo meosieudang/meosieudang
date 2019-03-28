@@ -74,7 +74,6 @@ export const addNewProject = data => dispatch => {
         type: ADD_NEW_PROJECT_SUCCESS,
         payload: res.data
       });
-      // dispatch({ type: CLEAR_ERRORS });
     })
     .catch(err =>
       dispatch({
@@ -207,12 +206,13 @@ export const updateLicensePlates = (plates, idPlates) => dispatch => {
 
 // DELETE LICENSE PLATES
 export const deleteLicensePlates = idPlates => dispatch => {
-  axios.delete(`/api/plates/${idPlates}/delete-plates`).then(res =>
+  axios.delete(`/api/plates/${idPlates}/delete-plates`).then(res => {
     dispatch({
       type: DELETE_PLATES_SUCCESS,
       payload: res.data
-    })
-  );
+    });
+    dispatch({ type: CLEAR_ERRORS });
+  });
 };
 
 // DELETE 1 SEAT

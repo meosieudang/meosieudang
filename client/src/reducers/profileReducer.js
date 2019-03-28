@@ -49,16 +49,23 @@ export default (state = initialState, action) => {
       };
 
     case GET_PROFILE:
-    case UPDATE_LICENSE_PLATES_SUCCESS:
-    case ADD_NEW_LICENSE_PLATES_SUCCESS:
     case DELETE_PLATES_SUCCESS:
       return {
         ...state,
         detailProfile: {},
+        plates: null,
         profiles: action.payload,
         seatUp: [],
         seatDown: [],
         search: []
+      };
+
+    case UPDATE_LICENSE_PLATES_SUCCESS:
+    case ADD_NEW_LICENSE_PLATES_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        profiles: action.payload
       };
 
     case GET_DETAIL_CAR:

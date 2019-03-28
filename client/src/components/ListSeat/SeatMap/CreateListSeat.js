@@ -6,7 +6,6 @@ const CreateListSeat = ({ numberSeat, onChange, handleSubmit, errors }) => {
     <Paper style={{ marginTop: 20, textAlign: "center", padding: 15 }}>
       <form onSubmit={handleSubmit}>
         <TextField
-          autoFocus
           type="text"
           label="Vui lòng nhập số ghế"
           onChange={onChange}

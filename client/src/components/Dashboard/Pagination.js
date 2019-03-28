@@ -60,12 +60,7 @@ export const PaginationRender = props => {
 };
 
 // item render
-export const ItemRender = ({
-  currentPage,
-  todosPerPage,
-  handleClickOpen,
-  arr
-}) => {
+export const ItemRender = ({ currentPage, todosPerPage, arr }) => {
   const indexOfLastTodo = currentPage * todosPerPage;
   const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
   const currentTodos = arr.slice(indexOfFirstTodo, indexOfLastTodo);
@@ -73,11 +68,7 @@ export const ItemRender = ({
   const renderTodos = currentTodos.map((project, index) => {
     return (
       <TableRow key={index} hover selected>
-        <UserItem
-          project={project}
-          index={index}
-          handleClickOpen={handleClickOpen}
-        />
+        <UserItem project={project} index={index} />
       </TableRow>
     );
   });

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Paper, Grid, TextField, Button } from "@material-ui/core";
 import NumberFormat from "react-number-format";
+import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
 
 class CreateLicensePlates extends Component {
   state = {
@@ -8,7 +9,20 @@ class CreateLicensePlates extends Component {
     start: "",
     end: "",
     licensePlates: "81B-011.84",
-    price: "250000"
+    price: "250000",
+    open: false
+  };
+
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ open: false });
   };
 
   componentWillReceiveProps(nextProps) {
@@ -32,6 +46,14 @@ class CreateLicensePlates extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if (!this.state.open) {
+      if (this.props.isAuthenticated) {
+        this.setState({ open: true });
+      }
+    }
+  }
+
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -51,25 +73,21 @@ class CreateLicensePlates extends Component {
       updateLicensePlates(newLicensePlates, this.state.idPlates);
     } else {
       //add
-
       addNewLicensePlates(newLicensePlates, profiles._id);
-    }
-
-    if (!this.props.errors) {
-      this.setState({
-        start: "",
-        end: "",
-        licensePlates: "81B-011.84",
-        price: "250000"
-      });
     }
   };
 
   render() {
-    const { start, end, price, licensePlates } = this.state;
+    const { start, end, price, licensePlates, idPlates, open } = this.state;
     const { errors, plates } = this.props;
     return (
       <Paper>
+        <StyledSnackBars
+          open={open}
+          handleClose={this.handleClose}
+          message={"Thành Công"}
+        />
+
         <Grid container spacing={16} justify="center" alignItems="center">
           <Grid item>
             <TextField
@@ -124,13 +142,13 @@ class CreateLicensePlates extends Component {
             <form onSubmit={this.handleSubmit}>
               <Button
                 variant="contained"
-                style={{ display: "block", margin: "auto" }}
                 type="submit"
                 disabled={
                   !start || !end || !licensePlates || !price ? true : false
                 }
+                color={idPlates ? "primary" : "secondary"}
               >
-                {this.state.idPlates ? "Sửa dữ liệu" : "Tạo chuyến xe"}
+                {idPlates ? "Sửa chuyến xe" : "Tạo chuyến xe"}
               </Button>
             </form>
           </Grid>

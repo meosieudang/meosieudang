@@ -7,32 +7,14 @@ import {
   deleteProject,
   searchProject
 } from "../../actions/profileAction";
-import {
-  Paper,
-  Typography,
-  Grid,
-  Fab,
-  Tooltip,
-  TextField,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody
-} from "@material-ui/core";
-import { PaginationRender, ItemRender } from "./Pagination";
+import { Paper, Typography, Grid, Fab, Tooltip } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
 
 import styled from "styled-components";
 import DialogAction from "./DialogAction";
-import { TITLES } from "../../actions/type";
-
-const StyledDiv = styled(props => (
-  <div classes={{ root: "root" }} {...props} />
-))`
-  overflow-x: auto;
-`;
+import Search from "./Search";
+import ProjectList from "./ProjectList";
 
 const StyledFab = styled(props => (
   <Fab size="large" classes={{ root: "root" }} {...props} />
@@ -59,9 +41,6 @@ const StyledFab = styled(props => (
 class Dashboardv2 extends Component {
   state = {
     open: false,
-    currentPage: 1,
-    todosPerPage: 5,
-    active: false,
     search: ""
   };
 
@@ -73,22 +52,10 @@ class Dashboardv2 extends Component {
     });
   };
 
-  handleClick = event => {
-    this.setState({
-      currentPage: Number(event.target.id)
-    });
-  };
-
   handleChange = e =>
     this.setState({ [e.target.name]: e.target.value }, () =>
       this.props.searchProject(this.state.search)
     );
-
-  handleDeleteProject = id => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa dữ liệu này ?")) {
-      this.props.deleteProject(id);
-    }
-  };
 
   componentDidMount() {
     this.props.getAllProject();
@@ -131,64 +98,12 @@ class Dashboardv2 extends Component {
         <Grid container>
           <Grid item xs={12}>
             <Paper style={{ padding: "2%", margin: "0 2%" }}>
-              <TextField
-                label="Tìm theo ngày..."
-                type="search"
-                margin="normal"
-                className="ml-3"
-                name="search"
-                onChange={this.handleChange}
+              <Search handleChange={this.handleChange} search={search} />
+              <ProjectList
+                search={search}
+                projects={projects}
+                deleteProject={this.props.deleteProject}
               />
-              {Object.keys(search).length < 0 ? (
-                <Typography>Không tìm thấy</Typography>
-              ) : (
-                <Typography>{`Có ${
-                  Object.keys(search).length
-                } kết quả tìm thấy`}</Typography>
-              )}
-              <StyledDiv>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      {TITLES.map((title, id) => (
-                        <TableCell key={id}>{title}</TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {Object.keys(search).length === 0 ? (
-                      <ItemRender
-                        currentPage={this.state.currentPage}
-                        todosPerPage={this.state.todosPerPage}
-                        arr={projects}
-                        handleClickOpen={this.handleClickOpen}
-                      />
-                    ) : (
-                      <ItemRender
-                        currentPage={this.state.currentPage}
-                        todosPerPage={this.state.todosPerPage}
-                        arr={search}
-                        handleClickOpen={this.handleClickOpen}
-                      />
-                    )}
-                  </TableBody>
-                </Table>
-              </StyledDiv>
-              {Object.keys(search).length === 0 ? (
-                <PaginationRender
-                  currentPage={this.state.currentPage}
-                  todosPerPage={this.state.todosPerPage}
-                  arr={projects}
-                  handleClick={this.handleClick}
-                />
-              ) : (
-                <PaginationRender
-                  currentPage={this.state.currentPage}
-                  todosPerPage={this.state.todosPerPage}
-                  arr={search}
-                  handleClick={this.handleClick}
-                />
-              )}
             </Paper>
           </Grid>
         </Grid>

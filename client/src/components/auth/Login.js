@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Grid, Button, Typography } from "@material-ui/core";
 import { StyledPaper } from "../../StyledComponents/StyledPaper";
-import { StyledTextField } from "../../StyledComponents/StyledTextFeild";
+import { StyledTextField } from "../../StyledComponents/StyledTextField";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser, logOutUser } from "../../actions/authAction";
@@ -49,6 +49,7 @@ class Login extends Component {
             <Grid container spacing={16}>
               <Grid item xs={12}>
                 <StyledTextField
+                  full
                   autoFocus
                   bongpro="true"
                   label="Username"
@@ -60,6 +61,7 @@ class Login extends Component {
               </Grid>
               <Grid item xs={12}>
                 <StyledTextField
+                  full
                   label="Password"
                   onChange={this.handleChange}
                   name="password"

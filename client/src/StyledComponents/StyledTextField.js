@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const StyledTextField = styled(props => (
   <TextField
-    fullWidth
+    fullWidth={props.full ? true : false}
     InputLabelProps={{ classes: { root: "root", focused: "focused" } }}
     InputProps={{ classes: { underline: "underline" } }}
     {...props}

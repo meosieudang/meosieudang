@@ -5,18 +5,24 @@ import Visibility from "@material-ui/icons/Visibility";
 import { connect } from "react-redux";
 import { deleteProject } from "../../actions/profileAction";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
 
-const UserItem = ({
-  project,
-  index,
-  getUser,
-  deleteProject,
-  handleClickOpen
-}) => {
-  const handleDeleteProject = id => {
-    if (window.confirm("Bạn có chắc chắn muốn xóa dữ liệu này ?")) {
-      deleteProject(id);
-    }
+const UserItem = ({ project, index, deleteProject }) => {
+  const handleDelete = id => {
+    swal({
+      title: "Bạn có chắn chắn?",
+      text: "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(willDelete => {
+      if (willDelete) {
+        deleteProject(id);
+        swal("Xóa thành công", {
+          icon: "success"
+        });
+      }
+    });
   };
   return (
     <>
@@ -38,7 +44,7 @@ const UserItem = ({
         </Tooltip>
 
         <Tooltip title="Xóa">
-          <IconButton onClick={() => handleDeleteProject(project._id)}>
+          <IconButton onClick={() => handleDelete(project._id)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
