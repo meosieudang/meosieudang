@@ -10,6 +10,7 @@ import {
   Grid
 } from "@material-ui/core";
 import NumberFormat from "react-number-format";
+import swal from "sweetalert";
 
 class DialogSeat extends Component {
   state = {
@@ -68,6 +69,20 @@ class DialogSeat extends Component {
     }
   }
 
+  confirmAction = (idSeat, data) => {
+    swal({
+      title: "Bạn có muốn thay đổi dữ liệu này?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(willDelete => {
+      if (willDelete) {
+        swal("Sửa thành công", "", "success");
+        this.props.addAndUpdateSeatDown(idSeat, data);
+      }
+    });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const newUser = {
@@ -75,11 +90,11 @@ class DialogSeat extends Component {
       nameUser: this.state.nameUser,
       phoneUser: this.state.phoneUser
     };
+
     if (this.state.isBook) {
-      if (window.confirm("Bạn có muốn thay đổi dữ liệu này?")) {
-        this.props.addAndUpdateSeatDown(this.state.idSeat, newUser);
-      }
+      this.confirmAction(this.state.idSeat, newUser);
     } else {
+      swal("Thêm thành công", "", "success");
       this.props.addAndUpdateSeatDown(this.state.idSeat, newUser);
     }
     this.props.handleClose();

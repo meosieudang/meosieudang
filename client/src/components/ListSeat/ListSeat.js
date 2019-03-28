@@ -74,7 +74,7 @@ class ListSeat extends Component {
         <StyledSnackBars
           open={openSnackBar}
           handleClose={this.handleCloseSnackbar}
-          message={"Thành Công"}
+          message={"Thêm Thành Công"}
         />
 
         <Price detailProfile={detailProfile} />
