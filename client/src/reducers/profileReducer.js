@@ -17,14 +17,12 @@ export default (state = initialState, action) => {
     case types.GET_ALL_PROJECT:
       return {
         ...state,
-        projects: action.payload,
-        profiles: {}
+        projects: action.payload
       };
 
     case types.DELETE_PROJECT_SUCCESS:
       return {
         ...state,
-        profiles: {},
         projects: state.projects.filter(item => item._id !== action.idProject),
         search: state.search.filter(item => item._id !== action.idProject)
       };
@@ -33,12 +31,9 @@ export default (state = initialState, action) => {
     case types.DELETE_PLATES_SUCCESS:
       return {
         ...state,
-        detailProfile: {},
         plates: null,
-        profiles: action.payload,
-        seatUp: [],
-        seatDown: [],
-        search: []
+        search: [],
+        profiles: action.payload
       };
 
     case types.UPDATE_LICENSE_PLATES_SUCCESS:
