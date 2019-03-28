@@ -3,6 +3,21 @@ import NumberFormat from "react-number-format";
 import { Paper, Grid, Typography } from "@material-ui/core";
 
 const Price = ({ detailProfile }) => {
+  const renderTitle = arr => {
+    return Object.keys(detailProfile).length > 0
+      ? arr.map((title, i) => (
+          <Grid item key={i}>
+            <Typography variant="h6" align="center">
+              {title.title}
+            </Typography>
+            <Typography variant="h5" color="secondary" align="center">
+              {title.value}
+            </Typography>
+          </Grid>
+        ))
+      : null;
+  };
+
   const TITLE_DETAIL_CAR = [
     {
       title: "Ngày khởi hành: ",
@@ -16,6 +31,7 @@ const Price = ({ detailProfile }) => {
     },
     { title: "Biển số xe: ", value: detailProfile.licensePlates }
   ];
+
   const quantity =
     Object.keys(detailProfile).length > 0 &&
     detailProfile.seat.filter(item => item.isBook === true).length;
@@ -52,34 +68,12 @@ const Price = ({ detailProfile }) => {
   return (
     <Paper style={{ marginBottom: "2rem" }}>
       <Grid container justify="space-around" alignItems="center">
-        {Object.keys(detailProfile).length > 0
-          ? TITLE_DETAIL_CAR.map((title, i) => (
-              <Grid item key={i}>
-                <Typography variant="h6" align="center">
-                  {title.title}
-                </Typography>
-                <Typography variant="h5" color="secondary" align="center">
-                  {title.value}
-                </Typography>
-              </Grid>
-            ))
-          : null}
+        {renderTitle(TITLE_DETAIL_CAR)}
       </Grid>
       <br />
       <br />
       <Grid container justify="space-around" alignItems="center">
-        {Object.keys(detailProfile).length > 0
-          ? DETAIL_PRICE.map((title, i) => (
-              <Grid item key={i}>
-                <Typography variant="h6" align="center">
-                  {title.title}
-                </Typography>
-                <Typography variant="h5" color="secondary" align="center">
-                  {title.value}
-                </Typography>
-              </Grid>
-            ))
-          : null}
+        {renderTitle(DETAIL_PRICE)}
       </Grid>
     </Paper>
   );

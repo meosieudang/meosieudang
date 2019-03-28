@@ -8,22 +8,19 @@ import { addMultiUser } from "../../../actions/platesAction";
 class FormMultiUser extends Component {
   state = { nameUser: "", phoneUser: "", selectedOption: null };
 
-  handleChangeSelect = selectedOption => {
-    this.setState({ selectedOption });
-  };
+  handleChangeSelect = selectedOption => this.setState({ selectedOption });
 
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   handleSubmitMulti = e => {
     e.preventDefault();
-    const { selectedOption } = this.state;
-    const { data } = this.props;
+    const { selectedOption, nameUser, phoneUser } = this.state;
     const value = selectedOption.map(item => item.value);
     const newUser = {
       data: value,
-      nameUser: this.state.nameUser,
-      phoneUser: this.state.phoneUser,
-      idPlates: data._id
+      nameUser: nameUser,
+      phoneUser: phoneUser,
+      idPlates: this.props.data._id
     };
 
     this.props.addMultiUser(newUser);
@@ -34,15 +31,16 @@ class FormMultiUser extends Component {
     });
   };
 
+  listOptions = arr => {
+    return Object.keys(arr).length > 0
+      ? arr.seat
+          .filter(item => item.isBook === false)
+          .map(item => ({ value: item._id, label: item.nameSeat }))
+      : [];
+  };
+
   render() {
-    const { data } = this.props;
     const { nameUser, phoneUser, selectedOption } = this.state;
-    const list =
-      Object.keys(data).length > 0
-        ? data.seat
-            .filter(item => item.isBook === false)
-            .map(item => ({ value: item._id, label: item.nameSeat }))
-        : [];
 
     return (
       <Paper style={{ padding: 15 }}>
@@ -54,7 +52,7 @@ class FormMultiUser extends Component {
           isMulti
           value={selectedOption}
           onChange={this.handleChangeSelect}
-          options={list}
+          options={this.listOptions(this.props.data)}
         />
         <TextField
           fullWidth

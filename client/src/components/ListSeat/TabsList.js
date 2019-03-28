@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, Tab } from "@material-ui/core";
 
-function TabsList({ value, handleChange, label1, label2 }) {
+const TabsList = ({ value, handleChange, label1, label2 }) => {
   return (
     <>
       <Tabs
@@ -16,6 +16,6 @@ function TabsList({ value, handleChange, label1, label2 }) {
       </Tabs>
     </>
   );
-}
+};
 
 export default TabsList;
