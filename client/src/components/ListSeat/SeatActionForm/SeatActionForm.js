@@ -5,6 +5,7 @@ import SwipeableViews from "react-swipeable-views";
 import FormMultiUser from "./FormMultiUser";
 import FormMoveSeat from "./FormMoveSeat";
 import FormDeleteListSeat from "./FormDeleteListSeat";
+import swal from "sweetalert";
 
 class SeatActionForm extends Component {
   state = {
@@ -31,13 +32,22 @@ class SeatActionForm extends Component {
   submitMove = e => {
     e.preventDefault();
     const { selectMove1, selectMove2 } = this.state;
-    if (window.confirm("Bạn có chắc chắn chuyển ghế ?")) {
-      this.props.swapSeat(selectMove1.value, selectMove2.value);
-      this.setState({
-        selectMove1: null,
-        selectMove2: null
-      });
-    }
+    swal({
+      title: "Bạn có chắc chắn chuyển ghế ?",
+      text: "Dữ liệu thông tin khách hàng sẽ thay đổi!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(willSwap => {
+      if (willSwap) {
+        this.props.swapSeat(selectMove1.value, selectMove2.value);
+        this.setState({
+          selectMove1: null,
+          selectMove2: null
+        });
+        setTimeout(() => swal("Chuyển thành công", "", "success"), 500);
+      }
+    });
   };
 
   render() {

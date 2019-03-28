@@ -28,7 +28,7 @@ const StyledSnackBars = ({ open, handleClose, message }) => {
         horizontal: "left"
       }}
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={3000}
       onClose={handleClose}
     >
       <StyledContent

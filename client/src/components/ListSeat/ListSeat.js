@@ -13,10 +13,19 @@ import Price from "./Price";
 import SeatActionForm from "./SeatActionForm/SeatActionForm";
 import SeatMap from "./SeatMap/SeatMap";
 import DialogActionForm from "./DialogActionForm/DialogActionForm";
+import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
 
 class ListSeat extends Component {
   state = {
-    open: false
+    open: false,
+    openSnackBar: false
+  };
+
+  handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({ openSnackBar: false });
   };
 
   handleClickOpen = () => {
@@ -33,6 +42,14 @@ class ListSeat extends Component {
     this.props.getDetailCar(this.props.match.params.id);
   }
 
+  componentDidUpdate() {
+    if (!this.state.openSnackBar) {
+      if (this.props.isAuthenticated) {
+        setTimeout(() => this.setState({ openSnackBar: true }), 1000);
+      }
+    }
+  }
+
   render() {
     const {
       detailProfile,
@@ -42,7 +59,7 @@ class ListSeat extends Component {
       user,
       addAndUpdateSeatDown
     } = this.props;
-    const { open } = this.state;
+    const { open, openSnackBar } = this.state;
 
     return (
       <Paper style={{ padding: "2rem" }}>
@@ -52,6 +69,12 @@ class ListSeat extends Component {
           isAuthenticated={isAuthenticated}
           user={user}
           addAndUpdateSeatDown={addAndUpdateSeatDown}
+        />
+
+        <StyledSnackBars
+          open={openSnackBar}
+          handleClose={this.handleCloseSnackbar}
+          message={"Thành Công"}
         />
 
         <Price detailProfile={detailProfile} />

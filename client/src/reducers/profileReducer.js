@@ -90,7 +90,8 @@ export default (state = initialState, action) => {
     case ADD_MULTI_USER:
       return {
         ...state,
-        msg: action.payload
+        msg: action.payload,
+        isAuthenticated: true
       };
 
     case ADD_NEW_PROJECT_SUCCESS:

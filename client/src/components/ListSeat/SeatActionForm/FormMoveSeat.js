@@ -10,16 +10,14 @@ const FormMoveSeat = ({
   submitMove,
   data
 }) => {
-  const list1 =
-    Object.keys(data).length > 0
-      ? data.seat
-          .filter(item => item.isBook === true)
+  const listOptions = (arr, isBook) => {
+    return Object.keys(arr).length > 0
+      ? arr.seat
+          .filter(item => item.isBook === isBook)
           .map(item => ({ value: item._id, label: item.nameSeat }))
       : [];
-  const list2 =
-    Object.keys(data).length > 0
-      ? data.seat.map(item => ({ value: item._id, label: item.nameSeat }))
-      : [];
+  };
+
   return (
     <div style={{ padding: 15 }}>
       <Typography variant="display1" align="center" gutterBottom>
@@ -29,14 +27,14 @@ const FormMoveSeat = ({
         placeholder="Vui lòng chọn ghế hiện tại"
         value={selectMove1}
         onChange={handleChangeMove1}
-        options={list1}
+        options={listOptions(data, true)}
       />
       <br />
       <Select
         placeholder="Vui lòng chọn ghế cần đổi"
         value={selectMove2}
         onChange={handleChangeMove2}
-        options={list2}
+        options={listOptions(data, false)}
       />
       <br />
       <form onSubmit={submitMove}>

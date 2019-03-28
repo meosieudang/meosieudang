@@ -176,6 +176,7 @@ export const addMultiUser = data => dispatch => {
         payload: res.data
       });
       dispatch(getDetailCar(data.idPlates));
+      dispatch({ type: CLEAR_ERRORS });
     })
     .catch(err =>
       dispatch({
