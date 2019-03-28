@@ -17,6 +17,7 @@ export default (state = initialState, action) => {
     case types.GET_ALL_PROJECT:
       return {
         ...state,
+        profiles: {},
         projects: action.payload
       };
 
@@ -60,7 +61,8 @@ export default (state = initialState, action) => {
         ...state,
         detailProfile: action.payload,
         seatDown: seatDown,
-        seatUp: seatUp
+        seatUp: seatUp,
+        profiles: {}
       };
 
     case types.ADD_MULTI_USER:
