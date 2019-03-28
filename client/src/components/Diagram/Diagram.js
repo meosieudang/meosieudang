@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
-import { Paper, Typography, Grid, Card } from "@material-ui/core";
+import { Typography, Grid, Card } from "@material-ui/core";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getDetailCar } from "../../actions/profileAction";
+import { getDetailCar } from "../../actions/platesAction";
 
 class Diagram extends Component {
   componentDidMount() {

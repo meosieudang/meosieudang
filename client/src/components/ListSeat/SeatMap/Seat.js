@@ -9,7 +9,7 @@ import {
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
 import { connect } from "react-redux";
-import { getUser, deleteSeat } from "../../../actions/profileAction";
+import { getUser, deleteSeat } from "../../../actions/platesAction";
 import styled from "styled-components";
 import swal from "sweetalert";
 

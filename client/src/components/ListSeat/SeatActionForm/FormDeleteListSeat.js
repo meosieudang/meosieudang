@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper, Button } from "@material-ui/core";
 import { connect } from "react-redux";
-import { deleteListSeat } from "../../../actions/profileAction";
+import { deleteListSeat } from "../../../actions/platesAction";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 

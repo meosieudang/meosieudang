@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Paper, Grid } from "@material-ui/core";
 import { connect } from "react-redux";
+import { closeDialog } from "../../actions/profileAction";
 import {
   getDetailCar,
   addAndUpdateSeatDown,
   addMultiUser,
-  swapSeat,
-  closeDialog
-} from "../../actions/profileAction";
+  swapSeat
+} from "../../actions/platesAction";
 import { withRouter } from "react-router-dom";
 import Price from "./Price";
 import SeatActionForm from "./SeatActionForm/SeatActionForm";

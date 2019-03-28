@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import {
   getProject,
   addNewLicensePlates,
-  getPlates,
-  updateLicensePlates,
-  deleteLicensePlates
+  getPlates
 } from "../../actions/profileAction";
+import {
+  deleteLicensePlates,
+  updateLicensePlates
+} from "../../actions/platesAction";
 import { withRouter } from "react-router-dom";
 import {
   Paper,

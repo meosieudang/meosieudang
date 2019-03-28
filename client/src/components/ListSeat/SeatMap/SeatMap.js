@@ -4,7 +4,7 @@ import SwipeableViews from "react-swipeable-views";
 import Seat from "./Seat";
 import CreateListSeat from "./CreateListSeat";
 import { connect } from "react-redux";
-import { addNewListSeat } from "../../../actions/profileAction";
+import { addNewListSeat } from "../../../actions/platesAction";
 
 class SeatMap extends Component {
   state = {

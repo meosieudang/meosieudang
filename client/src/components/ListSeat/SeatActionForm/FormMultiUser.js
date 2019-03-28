@@ -3,7 +3,7 @@ import Select from "react-select";
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
 import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
-import { addMultiUser } from "../../../actions/profileAction";
+import { addMultiUser } from "../../../actions/platesAction";
 
 class FormMultiUser extends Component {
   state = { nameUser: "", phoneUser: "", selectedOption: null };
