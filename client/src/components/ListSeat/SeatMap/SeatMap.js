@@ -31,6 +31,17 @@ class SeatMap extends Component {
   render() {
     const { value, numberSeat } = this.state;
     const { seatDown, seatUp, handleClickOpen, errors } = this.props;
+
+    if (seatDown.length === 0)
+      return (
+        <CreateListSeat
+          style={{ marginTop: 20 }}
+          numberSeat={numberSeat}
+          onChange={this.onChange}
+          handleSubmit={this.onSubmit}
+          errors={errors}
+        />
+      );
     return (
       <>
         <TabsList
@@ -43,16 +54,6 @@ class SeatMap extends Component {
           <Seat seatArray={seatDown} handleClickOpen={handleClickOpen} />
           <Seat seatArray={seatUp} handleClickOpen={handleClickOpen} />
         </SwipeableViews>
-
-        {seatDown.length === 0 ? (
-          <CreateListSeat
-            style={{ marginTop: 20 }}
-            numberSeat={numberSeat}
-            onChange={this.onChange}
-            handleSubmit={this.onSubmit}
-            errors={errors}
-          />
-        ) : null}
       </>
     );
   }

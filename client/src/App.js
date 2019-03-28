@@ -13,6 +13,7 @@ import Navbar from "./components/Navbar/Navbar";
 import ListSeat from "./components/ListSeat/ListSeat";
 import Dashboardv2 from "./components/Dashboard/Dashboardv2";
 import Diagram from "./components/Diagram/Diagram";
+import PrivateRoute from "./common/PrivateRoute";
 
 //check token
 if (localStorage.jwtToken) {
@@ -43,10 +44,14 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/dashboard" exact component={Dashboardv2} />
-            <Route path="/dashboard/:id" exact component={DetailProfile} />
-            <Route path="/dashboard/detail/:id" component={ListSeat} />
-            <Route path="/diagram/:id" component={Diagram} />
+            <PrivateRoute path="/dashboard" exact component={Dashboardv2} />
+            <PrivateRoute
+              path="/dashboard/:id"
+              exact
+              component={DetailProfile}
+            />
+            <PrivateRoute path="/dashboard/detail/:id" component={ListSeat} />
+            <PrivateRoute path="/diagram/:id" component={Diagram} />
           </Switch>
         </BrowserRouter>
       </Provider>

@@ -10,6 +10,32 @@ import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
 import { connect } from "react-redux";
 import { getUser, deleteSeat } from "../../../actions/profileAction";
+import styled from "styled-components";
+
+const StyleCard = styled(props => <Card {...props} />)`
+  width: 220px;
+  height: 140px;
+  margin: 10px;
+  margin-top: 20px;
+  background-color: ${props => (props.isbook ? "#1976d2 " : "")} !important;
+
+  @media screen and (max-width: 1024px) {
+    width: 180px;
+  }
+`;
+
+const StyledWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  justify-content: center;
+`;
+
+const StyledTypography = styled(props => (
+  <Typography variant="h5" gutterBottom align="center" {...props} />
+))`
+  color: ${props => (props.textcolor ? "white" : "black")} !important;
+`;
 
 const Seat = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
   const getUserAndOpenModal = user => {
@@ -24,25 +50,9 @@ const Seat = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        flexDirection: "row-reverse",
-        justifyContent: "center"
-      }}
-    >
+    <StyledWrap>
       {seatArray.map(item => (
-        <Card
-          style={{
-            width: 220,
-            height: 140,
-            margin: 10,
-            marginTop: 20,
-            backgroundColor: item.isBook ? "#1976d2" : ""
-          }}
-          key={item._id}
-        >
+        <StyleCard key={item._id} isbook={item.isBook ? "true" : undefined}>
           <CardHeader
             style={{ padding: "5px 15px 0 15px" }}
             action={
@@ -61,26 +71,16 @@ const Seat = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
             title={item.nameSeat}
           />
           <CardContent style={{ padding: 0 }}>
-            <Typography
-              variant="h5"
-              gutterBottom
-              align="center"
-              style={{ color: item.nameUser ? "white" : "black" }}
-            >
+            <StyledTypography textcolor={item.nameUser ? "true" : "false"}>
               {item.nameUser}
-            </Typography>
-            <Typography
-              variant="h5"
-              gutterBottom
-              align="center"
-              style={{ color: "white" }}
-            >
+            </StyledTypography>
+            <StyledTypography textcolor="true">
               {item.phoneUser}
-            </Typography>
+            </StyledTypography>
           </CardContent>
-        </Card>
+        </StyleCard>
       ))}
-    </div>
+    </StyledWrap>
   );
 };
 

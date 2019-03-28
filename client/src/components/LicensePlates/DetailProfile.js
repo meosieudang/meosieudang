@@ -23,6 +23,7 @@ import NumberFormat from "react-number-format";
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
 import swal from "sweetalert";
+import Spinner from "../../StyledComponents/Spinner";
 
 class DetailProfile extends Component {
   componentDidMount() {
@@ -125,7 +126,7 @@ class DetailProfile extends Component {
               </Grid>
             ))
           ) : (
-            <Typography variant="h5">{"Loading..."}</Typography>
+            <Spinner />
           )}
         </Grid>
       </Paper>
