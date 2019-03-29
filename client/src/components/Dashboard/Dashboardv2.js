@@ -8,13 +8,12 @@ import {
   searchProject
 } from "../../actions/profileAction";
 import { Paper, Typography, Grid, Fab, Tooltip } from "@material-ui/core";
-
 import AddIcon from "@material-ui/icons/Add";
-
 import styled from "styled-components";
 import DialogAction from "./DialogAction";
 import Search from "./Search";
 import ProjectList from "./ProjectList";
+import { Spinner } from "../../StyledComponents/Spinner";
 
 const StyledFab = styled(props => (
   <Fab size="large" classes={{ root: "root" }} {...props} />
@@ -70,6 +69,9 @@ class Dashboardv2 extends Component {
       search
     } = this.props;
     const { open } = this.state;
+
+    if (Object.keys(projects).length === 0) return <Spinner />;
+
     return (
       <Fragment>
         <DialogAction
@@ -90,7 +92,7 @@ class Dashboardv2 extends Component {
           align="center"
           variant="display2"
           gutterBottom
-          style={{ marginTop: "2rem" }}
+          style={{ marginTop: "15vh" }}
         >
           DANH SÁCH XE THEO NGÀY
         </Typography>

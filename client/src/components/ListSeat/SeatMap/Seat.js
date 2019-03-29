@@ -9,9 +9,12 @@ import {
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
 import { connect } from "react-redux";
-import { getUser, deleteSeat } from "../../../actions/platesAction";
+import {
+  getUser,
+  deleteSeat,
+  modalContent
+} from "../../../actions/platesAction";
 import styled from "styled-components";
-import swal from "sweetalert";
 
 const StyleCard = styled(props => <Card {...props} />)`
   width: 220px;
@@ -45,17 +48,11 @@ const Seat = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
   };
 
   const handleDeleteSeat = id => {
-    swal({
-      title: "Bạn có muốn xóa khách hàng này ?",
-      text: "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true
-    }).then(willDelete => {
+    modalContent(
+      "Bạn có muốn xóa khách hàng này ?",
+      "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!"
+    ).then(willDelete => {
       if (willDelete) {
-        swal("Xóa thành công", {
-          icon: "success"
-        });
         deleteSeat(id);
       }
     });

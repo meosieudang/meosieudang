@@ -77,7 +77,6 @@ class DialogSeat extends Component {
       dangerMode: true
     }).then(willDelete => {
       if (willDelete) {
-        swal("Sửa thành công", "", "success");
         this.props.addAndUpdateSeatDown(idSeat, data);
       }
     });
@@ -94,7 +93,6 @@ class DialogSeat extends Component {
     if (this.state.isBook) {
       this.confirmAction(this.state.idSeat, newUser);
     } else {
-      swal("Thêm thành công", "", "success");
       this.props.addAndUpdateSeatDown(this.state.idSeat, newUser);
     }
     this.props.handleClose();

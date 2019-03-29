@@ -32,11 +32,9 @@ class FormMultiUser extends Component {
   };
 
   listOptions = arr => {
-    return Object.keys(arr).length > 0
-      ? arr.seat
-          .filter(item => item.isBook === false)
-          .map(item => ({ value: item._id, label: item.nameSeat }))
-      : [];
+    return arr.seat
+      .filter(item => item.isBook === false)
+      .map(item => ({ value: item._id, label: item.nameSeat }));
   };
 
   render() {

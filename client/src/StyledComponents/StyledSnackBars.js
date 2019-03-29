@@ -24,7 +24,7 @@ const StyledSnackBars = ({ open, handleClose, message }) => {
   return (
     <StyledWrap
       anchorOrigin={{
-        vertical: "bottom",
+        vertical: "top",
         horizontal: "left"
       }}
       open={open}

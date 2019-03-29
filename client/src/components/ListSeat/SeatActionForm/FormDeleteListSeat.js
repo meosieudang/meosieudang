@@ -1,27 +1,21 @@
 import React from "react";
 import { Paper, Button } from "@material-ui/core";
 import { connect } from "react-redux";
-import { deleteListSeat } from "../../../actions/platesAction";
+import { deleteListSeat, modalContent } from "../../../actions/platesAction";
 import { Link } from "react-router-dom";
-import swal from "sweetalert";
 
 const FormDeleteListSeat = ({ deleteListSeat, detailProfile }) => {
   const handleDelete = e => {
     e.preventDefault();
-    swal({
-      title: "Bạn có chắc chắn muốn xóa danh sách ghế này",
-      text: "Sau khi xóa, dữ liệu danh sách ghế này sẽ không thể khôi phục!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true
-    }).then(willDelete => {
+    const idPlates = {
+      idPlates: detailProfile._id
+    };
+
+    modalContent(
+      "Bạn có chắc chắn muốn xóa danh sách ghế này",
+      "Sau khi xóa, dữ liệu danh sách ghế này sẽ không thể khôi phục!"
+    ).then(willDelete => {
       if (willDelete) {
-        swal("Xóa thành công", {
-          icon: "success"
-        });
-        const idPlates = {
-          idPlates: detailProfile._id
-        };
         deleteListSeat(idPlates);
       }
     });

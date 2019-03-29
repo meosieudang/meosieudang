@@ -13,41 +13,19 @@ import Price from "./Price";
 import SeatActionForm from "./SeatActionForm/SeatActionForm";
 import SeatMap from "./SeatMap/SeatMap";
 import DialogActionForm from "./DialogActionForm/DialogActionForm";
-import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
+import { Spinner } from "../../StyledComponents/Spinner";
 
 class ListSeat extends Component {
   state = {
-    open: false,
-    openSnackBar: false
-  };
-
-  handleCloseSnackbar = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    this.setState({ openSnackBar: false });
+    open: false
   };
 
   handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false }, () => {
-      this.props.closeDialog();
-    });
+    this.setState({ open: !this.state.open });
   };
 
   componentDidMount() {
     this.props.getDetailCar(this.props.match.params.id);
-  }
-
-  componentDidUpdate() {
-    if (!this.state.openSnackBar) {
-      if (this.props.isAuthenticated) {
-        setTimeout(() => this.setState({ openSnackBar: true }), 1000);
-      }
-    }
   }
 
   render() {
@@ -59,22 +37,17 @@ class ListSeat extends Component {
       user,
       addAndUpdateSeatDown
     } = this.props;
-    const { open, openSnackBar } = this.state;
+    const { open } = this.state;
 
+    if (Object.keys(detailProfile).length === 0) return <Spinner />;
     return (
-      <Paper style={{ padding: "2rem" }}>
+      <Paper style={{ padding: "2rem", paddingTop: "15vh" }}>
         <DialogActionForm
           open={open}
-          handleClose={this.handleClose}
+          handleClose={this.handleClickOpen}
           isAuthenticated={isAuthenticated}
           user={user}
           addAndUpdateSeatDown={addAndUpdateSeatDown}
-        />
-
-        <StyledSnackBars
-          open={openSnackBar}
-          handleClose={this.handleCloseSnackbar}
-          message={"Thêm Thành Công"}
         />
 
         <Price detailProfile={detailProfile} />
@@ -109,7 +82,6 @@ export default connect(
   mapStateToProps,
   {
     getDetailCar,
-
     addAndUpdateSeatDown,
     addMultiUser,
     swapSeat,

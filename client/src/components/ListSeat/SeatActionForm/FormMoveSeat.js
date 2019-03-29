@@ -11,11 +11,9 @@ const FormMoveSeat = ({
   data
 }) => {
   const listOptions = (arr, isBook) => {
-    return Object.keys(arr).length > 0
-      ? arr.seat
-          .filter(item => item.isBook === isBook)
-          .map(item => ({ value: item._id, label: item.nameSeat }))
-      : [];
+    return arr.seat
+      .filter(item => item.isBook === isBook)
+      .map(item => ({ value: item._id, label: item.nameSeat }));
   };
 
   return (

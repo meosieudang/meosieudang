@@ -22,6 +22,18 @@ export const DELETE_SEAT_SUCCESS = "DELETE_SEAT_SUCCESS";
 export const DELETE_PROJECT_SUCCESS = "DELETE_PROJECT_SUCCESS";
 export const SEARCH_PROJECT = "SEARCH_PROJECT";
 export const DELETE_LIST_SEAT_SUCCESS = "DELETE_LIST_SEAT_SUCCESS";
+export const LOADING = "LOADING";
+export const SHOW_ADD = "SHOW_ADD";
+export const CLOSE_ADD = "CLOSE_ADD";
+export const SHOW_UPDATE = "SHOW_UPDATE";
+export const CLOSE_UPDATE = "CLOSE_UPDATE";
+export const SHOW_DELETE = "SHOW_DELETE";
+export const CLOSE_DELETE = "CLOSE_DELETE";
+
+// message
+export const MSG_UPDATE_SUCCESS = "Cập nhật thành công !";
+export const MSG_DELETE_SUCCESS = "Xóa thành công !";
+export const MSG_ADD_SUCCESS = "Thêm thành công !";
 
 export const TITLES = [
   "STT",

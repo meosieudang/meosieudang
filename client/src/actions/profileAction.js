@@ -8,7 +8,9 @@ import {
   ADD_NEW_LICENSE_PLATES_SUCCESS,
   GET_PLATES,
   DELETE_PROJECT_SUCCESS,
-  SEARCH_PROJECT
+  SEARCH_PROJECT,
+  LOADING,
+  SHOW_ADD
 } from "./type";
 
 //get all project
@@ -62,6 +64,7 @@ export const addNewProject = data => dispatch => {
 
 //add new LicensePlates
 export const addNewLicensePlates = (data, idLincensePlates) => dispatch => {
+  dispatch({ type: LOADING });
   axios
     .post(`/api/profiles/${idLincensePlates}`, data)
     .then(res => {
@@ -69,6 +72,7 @@ export const addNewLicensePlates = (data, idLincensePlates) => dispatch => {
         type: ADD_NEW_LICENSE_PLATES_SUCCESS,
         payload: res.data
       });
+      dispatch({ type: SHOW_ADD });
       dispatch({ type: CLEAR_ERRORS });
     })
     .catch(err =>

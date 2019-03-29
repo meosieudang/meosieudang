@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const passport = require("passport");
-const async = require("async");
 const Plates = require("../../models/Plates");
 const Profile = require("../../models/Profile");
 const validateLicensePlates = require("../../validation/licensePlates");
@@ -182,10 +181,13 @@ router.put(
         "seat.$.isBook": req.body.nameUser ? true : false
       },
       { new: true }
-    ).then(seat => {
-      if (seat === null) return res.status(404).json({ msg: "Not found seat" });
-      res.json(seat);
-    });
+    )
+      .populate("profile", ["create_date"])
+      .then(seat => {
+        if (seat === null)
+          return res.status(404).json({ msg: "Not found seat" });
+        res.json(seat);
+      });
   }
 );
 

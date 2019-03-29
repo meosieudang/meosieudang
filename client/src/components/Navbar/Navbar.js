@@ -3,8 +3,9 @@ import { AppBar, Toolbar, Typography, Button, Avatar } from "@material-ui/core";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logOutUser } from "../../actions/authAction";
+import { SpinnerLoading } from "../../StyledComponents/Spinner";
 
-const Navbar = ({ history, logOutUser, auth }) => {
+const Navbar = ({ history, logOutUser, auth, isLoading }) => {
   const logOut = () => {
     history.push("/");
     logOutUser();
@@ -32,19 +33,23 @@ const Navbar = ({ history, logOutUser, auth }) => {
   );
 
   return (
-    <AppBar position="static" style={{ backgroundColor: "#2196f3" }}>
-      <Toolbar>
-        <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-          HƯNG THỊNH GIA LAI
-        </Typography>
-        {auth.isAuthenticated ? authLink : guestLink}
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar position="fixed" style={{ backgroundColor: "#2196f3" }}>
+        <Toolbar>
+          <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
+            HƯNG THỊNH GIA LAI
+          </Typography>
+          {auth.isAuthenticated ? authLink : guestLink}
+        </Toolbar>
+      </AppBar>
+      {isLoading ? <SpinnerLoading /> : null}
+    </>
   );
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  isLoading: state.project.isLoading
 });
 
 export default connect(

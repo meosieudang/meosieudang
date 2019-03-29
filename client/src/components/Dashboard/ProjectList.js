@@ -24,12 +24,6 @@ class ProjectList extends Component {
     active: false
   };
 
-  handleOpenConfirm = () => {
-    this.setState({ openConfirm: true });
-  };
-
-  handleCloseConfirm = () => this.setState({ openConfirm: false });
-
   handleClick = event => {
     this.setState({
       currentPage: Number(event.target.id)

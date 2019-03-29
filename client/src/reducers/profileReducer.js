@@ -5,12 +5,19 @@ const initialState = {
   profiles: {},
   detailProfile: {},
   isAuthenticated: false,
+  isLoading: false,
+  isUpdate: false,
+  isDelete: false,
+  isAdd: false,
   seatUp: [],
   seatDown: [],
   user: null,
   plates: null,
   search: []
 };
+
+const listSeat = (arr, value) =>
+  arr.filter(item => item.nameSeat.indexOf(value) !== -1);
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -34,6 +41,8 @@ export default (state = initialState, action) => {
         ...state,
         plates: null,
         search: [],
+        detailProfile: {},
+        isLoading: false,
         profiles: action.payload
       };
 
@@ -42,34 +51,44 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
+        isLoading: false,
         profiles: action.payload
       };
 
     case types.GET_DETAIL_CAR:
-    case types.ADD_NEW_LIST_SEAT:
-    case types.ADD_OR_UPDATE_SUCCESS:
-    case types.SWAP_SEAT_SUCCESS:
-    case types.DELETE_SEAT_SUCCESS:
-    case types.DELETE_LIST_SEAT_SUCCESS:
-      const seatDown = action.payload.seat.filter(
-        item => item.nameSeat.indexOf("A") !== -1
-      );
-      const seatUp = action.payload.seat.filter(
-        item => item.nameSeat.indexOf("B") !== -1
-      );
+      const seatDown = listSeat(action.payload.seat, "A");
+      const seatUp = listSeat(action.payload.seat, "B");
       return {
         ...state,
         detailProfile: action.payload,
         seatDown: seatDown,
         seatUp: seatUp,
-        profiles: {}
+        profiles: {},
+        isLoading: false,
+        isAuthenticated: false
+      };
+
+    case types.ADD_NEW_LIST_SEAT:
+    case types.ADD_OR_UPDATE_SUCCESS:
+    case types.SWAP_SEAT_SUCCESS:
+    case types.DELETE_SEAT_SUCCESS:
+    case types.DELETE_LIST_SEAT_SUCCESS:
+      const seatDown1 = listSeat(action.payload.seat, "A");
+      const seatUp1 = listSeat(action.payload.seat, "B");
+      return {
+        ...state,
+        detailProfile: action.payload,
+        seatDown: seatDown1,
+        seatUp: seatUp1,
+        profiles: {},
+        isLoading: false
       };
 
     case types.ADD_MULTI_USER:
       return {
         ...state,
         msg: action.payload,
-        isAuthenticated: true
+        isLoading: true
       };
 
     case types.ADD_NEW_PROJECT_SUCCESS:
@@ -79,10 +98,44 @@ export default (state = initialState, action) => {
         isAuthenticated: true
       };
 
+    case types.SHOW_ADD:
+    case types.CLOSE_ADD:
+      return {
+        ...state,
+        isAdd: !state.isAdd
+      };
+
+    case types.SHOW_UPDATE:
+    case types.CLOSE_UPDATE:
+      return {
+        ...state,
+        isUpdate: !state.isUpdate
+      };
+
+    case types.SHOW_DELETE:
+    case types.CLOSE_DELETE:
+      return {
+        ...state,
+        isDelete: !state.isDelete
+      };
+
+    case types.LOADING:
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case types.GET_ERRORS:
+      return {
+        ...state,
+        isLoading: false
+      };
+
     case types.CLEAR_ERRORS:
       return {
         ...state,
         isAuthenticated: false,
+        isLoading: false,
         user: null,
         plates: null
       };

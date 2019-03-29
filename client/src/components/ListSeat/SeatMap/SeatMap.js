@@ -22,11 +22,9 @@ class SeatMap extends Component {
     this.props.addNewListSeat(this.props.detailProfile._id, numSeat);
   };
 
-  handleChange = (e, value) => this.setState({ value });
+  handleChangeTabList = (e, value) => this.setState({ value });
 
-  handleChangeIndex = index => {
-    this.setState({ value: index });
-  };
+  handleChangeIndex = index => this.setState({ value: index });
 
   render() {
     const { value, numberSeat } = this.state;
@@ -46,7 +44,7 @@ class SeatMap extends Component {
       <>
         <TabsList
           value={value}
-          handleChange={this.handleChange}
+          handleChange={this.handleChangeTabList}
           label1="tầng dưới"
           label2="tầng trên"
         />

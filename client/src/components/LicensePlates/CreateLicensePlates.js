@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Paper, Grid, TextField, Button } from "@material-ui/core";
 import NumberFormat from "react-number-format";
-import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
 
 class CreateLicensePlates extends Component {
   state = {
@@ -9,8 +8,7 @@ class CreateLicensePlates extends Component {
     start: "",
     end: "",
     licensePlates: "81B-011.84",
-    price: "250000",
-    open: false
+    price: "250000"
   };
 
   handleClose = (event, reason) => {
@@ -42,14 +40,6 @@ class CreateLicensePlates extends Component {
     }
   }
 
-  componentDidUpdate() {
-    if (!this.state.open) {
-      if (this.props.isAuthenticated) {
-        this.setState({ open: true });
-      }
-    }
-  }
-
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -74,16 +64,10 @@ class CreateLicensePlates extends Component {
   };
 
   render() {
-    const { start, end, price, licensePlates, idPlates, open } = this.state;
+    const { start, end, price, licensePlates, idPlates } = this.state;
     const { errors, plates } = this.props;
     return (
       <Paper>
-        <StyledSnackBars
-          open={open}
-          handleClose={this.handleClose}
-          message={"Thành Công"}
-        />
-
         <Grid container spacing={16} justify="center" alignItems="center">
           <Grid item>
             <TextField

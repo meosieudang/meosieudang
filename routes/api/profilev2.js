@@ -80,7 +80,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Profile.findById(req.params.idProfile)
-      .populate("profile", ["licensePlates", "start", "end"])
+      .populate("profile", ["licensePlates", "start", "end", "price"])
       .then(profile => {
         if (!profile) return res.status(404).json({ msg: "not found profile" });
 

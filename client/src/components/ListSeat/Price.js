@@ -4,26 +4,22 @@ import { Paper, Grid, Typography } from "@material-ui/core";
 
 const Price = ({ detailProfile }) => {
   const renderTitle = arr => {
-    return Object.keys(detailProfile).length > 0
-      ? arr.map((title, i) => (
-          <Grid item key={i}>
-            <Typography variant="h6" align="center">
-              {title.title}
-            </Typography>
-            <Typography variant="h5" color="secondary" align="center">
-              {title.value}
-            </Typography>
-          </Grid>
-        ))
-      : null;
+    return arr.map((title, i) => (
+      <Grid item key={i}>
+        <Typography variant="h6" align="center">
+          {title.title}
+        </Typography>
+        <Typography variant="h5" color="secondary" align="center">
+          {title.value}
+        </Typography>
+      </Grid>
+    ));
   };
 
   const TITLE_DETAIL_CAR = [
     {
       title: "Ngày khởi hành: ",
-      value:
-        Object.keys(detailProfile).length > 0 &&
-        detailProfile.profile.create_date
+      value: detailProfile.profile.create_date
     },
     {
       title: "Tên chuyến: ",
@@ -32,9 +28,8 @@ const Price = ({ detailProfile }) => {
     { title: "Biển số xe: ", value: detailProfile.licensePlates }
   ];
 
-  const quantity =
-    Object.keys(detailProfile).length > 0 &&
-    detailProfile.seat.filter(item => item.isBook === true).length;
+  const quantity = detailProfile.seat.filter(item => item.isBook === true)
+    .length;
 
   const DETAIL_PRICE = [
     {
