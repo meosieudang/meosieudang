@@ -32,7 +32,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Profile.findById(req.params.id)
-      .populate("profile", ["licensePlates", "start", "end", "price"])
+      .populate("profile", ["licensePlates", "start", "end", "price", "seat"])
       .then(profile => res.json(profile));
   }
 );
@@ -58,7 +58,7 @@ router.post(
     if (req.body.create_date) profileField.create_date = req.body.create_date;
 
     //Check create_date exist
-    Profile.findOne({ create_date: profileField.create_date }).then(profile => {
+    Profile.findOne({ create_date: req.body.create_date }).then(profile => {
       if (profile) {
         res.status(400).json({ create_date: "That Date already exists." });
       } else {
@@ -80,7 +80,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Profile.findById(req.params.idProfile)
-      .populate("profile", ["licensePlates", "start", "end", "price"])
+      .populate("profile", ["licensePlates", "start", "end", "price", "seat"])
       .then(profile => {
         if (!profile) return res.status(404).json({ msg: "not found profile" });
 

@@ -6,7 +6,10 @@ import {
   getDetailCar,
   addAndUpdateSeatDown,
   addMultiUser,
-  swapSeat
+  swapSeat,
+  closeDelete,
+  closeAdd,
+  closeUpdate
 } from "../../actions/platesAction";
 import { withRouter } from "react-router-dom";
 import Price from "./Price";
@@ -14,6 +17,12 @@ import SeatActionForm from "./SeatActionForm/SeatActionForm";
 import SeatMap from "./SeatMap/SeatMap";
 import DialogActionForm from "./DialogActionForm/DialogActionForm";
 import { Spinner } from "../../StyledComponents/Spinner";
+import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
+import {
+  MSG_DELETE_SUCCESS,
+  MSG_ADD_SUCCESS,
+  MSG_UPDATE_SUCCESS
+} from "../../actions/type";
 
 class ListSeat extends Component {
   state = {
@@ -35,7 +44,13 @@ class ListSeat extends Component {
       swapSeat,
       isAuthenticated,
       user,
-      addAndUpdateSeatDown
+      addAndUpdateSeatDown,
+      isDelete,
+      isAdd,
+      isUpdate,
+      closeDelete,
+      closeAdd,
+      closeUpdate
     } = this.props;
     const { open } = this.state;
 
@@ -48,6 +63,22 @@ class ListSeat extends Component {
           isAuthenticated={isAuthenticated}
           user={user}
           addAndUpdateSeatDown={addAndUpdateSeatDown}
+        />
+
+        <StyledSnackBars
+          open={isDelete}
+          handleClose={() => closeDelete()}
+          message={MSG_DELETE_SUCCESS}
+        />
+        <StyledSnackBars
+          open={isAdd}
+          handleClose={() => closeAdd()}
+          message={MSG_ADD_SUCCESS}
+        />
+        <StyledSnackBars
+          open={isUpdate}
+          handleClose={() => closeUpdate()}
+          message={MSG_UPDATE_SUCCESS}
         />
 
         <Price detailProfile={detailProfile} />
@@ -75,7 +106,10 @@ const mapStateToProps = state => ({
   detailProfile: state.project.detailProfile,
   msgError: state.error,
   isAuthenticated: state.project.isAuthenticated,
-  user: state.project.user
+  user: state.project.user,
+  isDelete: state.project.isDelete,
+  isAdd: state.project.isAdd,
+  isUpdate: state.project.isUpdate
 });
 
 export default connect(
@@ -85,6 +119,9 @@ export default connect(
     addAndUpdateSeatDown,
     addMultiUser,
     swapSeat,
-    closeDialog
+    closeDialog,
+    closeDelete,
+    closeAdd,
+    closeUpdate
   }
 )(withRouter(ListSeat));

@@ -13,7 +13,7 @@ const StyledDatePicker = ({ date, onChange, label }) => {
         format="DD/MM/YYYY"
         animateYearScrolling={false}
         minDate={new Date()}
-        onInputChange={e => console.log("Keyboard Input:", e.target.value)}
+        onInputChange={e => e.target.value}
       />
     </MuiPickersUtilsProvider>
   );

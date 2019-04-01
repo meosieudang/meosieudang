@@ -1,6 +1,7 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-import { Paper, Grid, Typography } from "@material-ui/core";
+import { Paper, Grid, Typography, Link } from "@material-ui/core";
+import { withRouter, Link as LinkRouter } from "react-router-dom";
 
 const Price = ({ detailProfile }) => {
   const renderTitle = arr => {
@@ -17,10 +18,6 @@ const Price = ({ detailProfile }) => {
   };
 
   const TITLE_DETAIL_CAR = [
-    {
-      title: "Ngày khởi hành: ",
-      value: detailProfile.profile.create_date
-    },
     {
       title: "Tên chuyến: ",
       value: `${detailProfile.start} - ${detailProfile.end}`
@@ -63,6 +60,19 @@ const Price = ({ detailProfile }) => {
   return (
     <Paper style={{ marginBottom: "2rem" }}>
       <Grid container justify="space-around" alignItems="center">
+        <Grid item>
+          <Typography variant="h6" align="center">
+            Ngày khởi hành:
+          </Typography>
+          <Link
+            component={LinkRouter}
+            to={`/dashboard/${detailProfile.profile._id}`}
+          >
+            <Typography variant="h5" color="secondary" align="center">
+              {detailProfile.profile.create_date}
+            </Typography>
+          </Link>
+        </Grid>
         {renderTitle(TITLE_DETAIL_CAR)}
       </Grid>
       <br />
@@ -74,4 +84,4 @@ const Price = ({ detailProfile }) => {
   );
 };
 
-export default Price;
+export default withRouter(Price);

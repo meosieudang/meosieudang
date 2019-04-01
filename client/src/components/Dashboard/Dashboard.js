@@ -7,13 +7,15 @@ import {
   deleteProject,
   searchProject
 } from "../../actions/profileAction";
+import { closeDelete, closeAdd } from "../../actions/platesAction";
 import { Paper, Typography, Grid, Fab, Tooltip } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import styled from "styled-components";
 import DialogAction from "./DialogAction";
 import Search from "./Search";
 import ProjectList from "./ProjectList";
-import { Spinner } from "../../StyledComponents/Spinner";
+import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
+import { MSG_DELETE_SUCCESS, MSG_ADD_SUCCESS } from "../../actions/type";
 
 const StyledFab = styled(props => (
   <Fab size="large" classes={{ root: "root" }} {...props} />
@@ -22,7 +24,7 @@ const StyledFab = styled(props => (
     position: fixed;
     bottom: 35px;
     right: 34px;
-    z-index: 99;
+    z-index: 1;
     background: #20c997;
     color: white;
 
@@ -37,7 +39,7 @@ const StyledFab = styled(props => (
   }
 `;
 
-class Dashboardv2 extends Component {
+class Dashboard extends Component {
   state = {
     open: false,
     search: ""
@@ -60,18 +62,23 @@ class Dashboardv2 extends Component {
     this.props.getAllProject();
   }
 
+  renderSnackbar = (open, close, message) => (
+    <StyledSnackBars open={open} handleClose={close} message={message} />
+  );
+
   render() {
     const {
       projects,
       msgError,
       isAuthenticated,
       addNewProject,
-      search
+      search,
+      isDelete,
+      closeDelete,
+      isAdd,
+      closeAdd
     } = this.props;
     const { open } = this.state;
-
-    if (Object.keys(projects).length === 0) return <Spinner />;
-
     return (
       <Fragment>
         <DialogAction
@@ -81,6 +88,9 @@ class Dashboardv2 extends Component {
           isAuthenticated={isAuthenticated}
           addNewProject={addNewProject}
         />
+
+        {this.renderSnackbar(isDelete, closeDelete, MSG_DELETE_SUCCESS)}
+        {this.renderSnackbar(isAdd, closeAdd, MSG_ADD_SUCCESS)}
 
         <Tooltip title="Thêm project mới">
           <StyledFab onClick={this.handleClickOpen}>
@@ -94,7 +104,9 @@ class Dashboardv2 extends Component {
           gutterBottom
           style={{ marginTop: "15vh" }}
         >
-          DANH SÁCH XE THEO NGÀY
+          {Object.keys(projects).length !== 0
+            ? "DANH SÁCH XE THEO NGÀY"
+            : "DANH SÁCH XE HIỆN TẠI RỖNG"}
         </Typography>
 
         <Grid container>
@@ -118,10 +130,20 @@ const mapStateToProps = state => ({
   projects: state.project.projects,
   msgError: state.error,
   isAuthenticated: state.project.isAuthenticated,
+  isDelete: state.project.isDelete,
+  isAdd: state.project.isAdd,
   search: state.project.search
 });
 
 export default connect(
   mapStateToProps,
-  { getAllProject, addNewProject, closeDialog, deleteProject, searchProject }
-)(Dashboardv2);
+  {
+    getAllProject,
+    addNewProject,
+    closeDialog,
+    deleteProject,
+    searchProject,
+    closeDelete,
+    closeAdd
+  }
+)(Dashboard);

@@ -19,6 +19,13 @@ const initialState = {
 const listSeat = (arr, value) =>
   arr.filter(item => item.nameSeat.indexOf(value) !== -1);
 
+const total = arr => {
+  const profilePlates = arr.profile.map(item => {
+    return item.seat.filter(seat => seat.isBook).length * item.price;
+  });
+  return profilePlates.reduce((a, b) => a + b, 0);
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.GET_ALL_PROJECT:
@@ -31,6 +38,7 @@ export default (state = initialState, action) => {
     case types.DELETE_PROJECT_SUCCESS:
       return {
         ...state,
+        isLoading: false,
         projects: state.projects.filter(item => item._id !== action.idProject),
         search: state.search.filter(item => item._id !== action.idProject)
       };
@@ -43,7 +51,8 @@ export default (state = initialState, action) => {
         search: [],
         detailProfile: {},
         isLoading: false,
-        profiles: action.payload
+        profiles: action.payload,
+        total: total(action.payload)
       };
 
     case types.UPDATE_LICENSE_PLATES_SUCCESS:
@@ -52,7 +61,8 @@ export default (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        profiles: action.payload
+        profiles: action.payload,
+        total: total(action.payload)
       };
 
     case types.GET_DETAIL_CAR:
@@ -95,7 +105,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         projects: [action.payload, ...state.projects],
-        isAuthenticated: true
+        isAuthenticated: true,
+        isLoading: false
       };
 
     case types.SHOW_ADD:

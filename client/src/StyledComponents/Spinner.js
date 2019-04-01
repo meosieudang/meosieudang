@@ -1,6 +1,6 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Typography, LinearProgress } from "@material-ui/core";
+import ReactLoading from "react-loading";
+import { Typography, LinearProgress, Paper } from "@material-ui/core";
 
 const styles = {
   width: "100%",
@@ -14,8 +14,8 @@ const styles = {
 const styleLoading = {
   position: "fixed",
   width: "100%",
-  top: 64,
-  zIndex: 1,
+  top: 0,
+  zIndex: 1301,
   height: "100vh",
   background: "rgba(0, 0, 0, 0.5)"
 };
@@ -30,7 +30,7 @@ const styleContent = {
 export const Spinner = () => {
   return (
     <div style={styles}>
-      <CircularProgress />
+      <ReactLoading type={"balls"} color={"#1de9b6"} />
       <Typography variant="caption" paragraph>
         Vui lòng chờ trong giây lát...
       </Typography>
@@ -44,9 +44,26 @@ export const SpinnerLoading = () => {
       <div style={styleLoading}>
         <LinearProgress color="secondary" style={{ height: 6 }} />
 
-        <Typography variant="body2" paragraph style={styleContent}>
-          Đang xử lý dữ liệu...
-        </Typography>
+        <div style={styleContent}>
+          <Paper
+            style={{
+              color: "black",
+              padding: "4%",
+              display: "flex",
+              alignItems: "center"
+            }}
+          >
+            <Typography variant="subtitle2">
+              Đang xử lý dữ liệu. Vui lòng chờ...
+            </Typography>
+            <ReactLoading
+              type={"bubbles"}
+              color={"#1de9b6"}
+              height={"60px"}
+              width={"60px"}
+            />
+          </Paper>
+        </div>
       </div>
     </>
   );

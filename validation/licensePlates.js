@@ -11,6 +11,8 @@ module.exports = function validateProfile(data) {
 
   if (arr[9] === " ") errors.licensePlates = "Vui lòng nhập đúng biển số xe";
 
+  if (Validator.isEmpty(data.licensePlates))
+    errors.licensePlates = "Không để trống ô này";
   if (Validator.isEmpty(data.start)) errors.start = "Không để trống ô này";
   if (Validator.isEmpty(data.end)) errors.end = "Không để trống ô này";
   if (Validator.isEmpty(data.price)) errors.price = "Không để trống ô này";

@@ -30,15 +30,13 @@ class ProjectList extends Component {
     });
   };
 
-  itemRender = (arr, currentPage, todosPerPage) => {
-    return (
-      <ItemRender
-        currentPage={currentPage}
-        todosPerPage={todosPerPage}
-        arr={arr}
-      />
-    );
-  };
+  itemRender = (arr, currentPage, todosPerPage) => (
+    <ItemRender
+      currentPage={currentPage}
+      todosPerPage={todosPerPage}
+      arr={arr}
+    />
+  );
 
   paginateRender = (arr, currentPage, todosPerPage) => (
     <PaginationRender

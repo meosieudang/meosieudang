@@ -18,9 +18,9 @@ class Diagram extends Component {
     const seatDown1 = this.sliceSeat(0, 15, detailProfile);
     const seatDown2 = this.sliceSeat(15, 17, detailProfile);
     const seatDown3 = this.sliceSeat(17, 22, detailProfile);
-    const seatUp1 = this.sliceSeat(22, 37, detailProfile);
-    const seatUp2 = this.sliceSeat(37, 39, detailProfile);
-    const seatUp3 = this.sliceSeat(39, 44, detailProfile);
+    // const seatUp1 = this.sliceSeat(22, 37, detailProfile);
+    // const seatUp2 = this.sliceSeat(37, 39, detailProfile);
+    // const seatUp3 = this.sliceSeat(39, 44, detailProfile);
     return (
       <Fragment>
         <Typography variant="h6" align="center" style={{ margin: "10px 0" }}>

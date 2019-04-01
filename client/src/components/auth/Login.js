@@ -81,7 +81,6 @@ class Login extends Component {
                   </Button>
                 </Grid>
                 <Grid item>
-                  {/* <Link to="/signup"> */}
                   <Button
                     variant="contained"
                     color="primary"
@@ -89,7 +88,6 @@ class Login extends Component {
                   >
                     Sign Up
                   </Button>
-                  {/* </Link> */}
                 </Grid>
               </Grid>
             </Grid>

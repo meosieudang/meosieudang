@@ -65,12 +65,13 @@ export const ItemRender = ({ currentPage, todosPerPage, arr }) => {
   const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
   const currentTodos = arr.slice(indexOfFirstTodo, indexOfLastTodo);
 
-  const renderTodos = currentTodos.map((project, index) => {
-    return (
-      <TableRow key={index} hover selected>
-        <UserItem project={project} index={index} />
-      </TableRow>
-    );
-  });
-  return <>{renderTodos}</>;
+  return (
+    <>
+      {currentTodos.map((project, i) => (
+        <TableRow key={i} hover selected>
+          <UserItem project={project} index={i} />
+        </TableRow>
+      ))}
+    </>
+  );
 };

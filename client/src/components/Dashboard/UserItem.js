@@ -11,22 +11,16 @@ import Visibility from "@material-ui/icons/Visibility";
 import { connect } from "react-redux";
 import { deleteProject } from "../../actions/profileAction";
 import { Link as LinkRouter } from "react-router-dom";
-import swal from "sweetalert";
+import { modalContent } from "../../actions/platesAction";
 
 const UserItem = ({ project, index, deleteProject }) => {
   const handleDelete = id => {
-    swal({
-      title: "Bạn có chắn chắn?",
-      text: "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true
-    }).then(willDelete => {
-      if (willDelete) {
+    modalContent(
+      "Bạn có chắn chắn ?",
+      "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!"
+    ).then(del => {
+      if (del) {
         deleteProject(id);
-        swal("Xóa thành công", {
-          icon: "success"
-        });
       }
     });
   };

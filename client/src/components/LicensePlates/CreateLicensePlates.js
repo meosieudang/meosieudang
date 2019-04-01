@@ -5,18 +5,10 @@ import NumberFormat from "react-number-format";
 class CreateLicensePlates extends Component {
   state = {
     idPlates: "",
-    start: "",
-    end: "",
+    start: "Gia Lai",
+    end: "Hồ Chí Minh",
     licensePlates: "81B-011.84",
     price: "250000"
-  };
-
-  handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    this.setState({ open: false });
   };
 
   componentWillReceiveProps(nextProps) {
@@ -34,8 +26,8 @@ class CreateLicensePlates extends Component {
         idPlates: "",
         start: "",
         end: "",
-        licensePlates: "81B-011.84",
-        price: "250000"
+        licensePlates: "",
+        price: ""
       });
     }
   }
@@ -63,6 +55,17 @@ class CreateLicensePlates extends Component {
     }
   };
 
+  renderTextField = (label, name, value, error, helperText) => (
+    <TextField
+      label={label}
+      name={name}
+      value={value}
+      onChange={this.handleChange}
+      error={error ? true : false}
+      helperText={error ? error : helperText}
+    />
+  );
+
   render() {
     const { start, end, price, licensePlates, idPlates } = this.state;
     const { errors, plates } = this.props;
@@ -70,22 +73,22 @@ class CreateLicensePlates extends Component {
       <Paper>
         <Grid container spacing={16} justify="center" alignItems="center">
           <Grid item>
-            <TextField
-              label="Điểm xuất phát"
-              name="start"
-              value={this.state.start}
-              onChange={this.handleChange}
-              helperText="Vui lòng nhập điểm xuất phát"
-            />
+            {this.renderTextField(
+              "Điểm xuất phát",
+              "start",
+              start,
+              errors.start,
+              "Vui lòng nhập điểm xuất phát"
+            )}
           </Grid>
           <Grid item>
-            <TextField
-              label="Điểm đến"
-              name="end"
-              value={this.state.end}
-              onChange={this.handleChange}
-              helperText="Vui lòng nhập điểm đến"
-            />
+            {this.renderTextField(
+              "Điểm đến",
+              "end",
+              end,
+              errors.end,
+              "Vui lòng nhập điểm đến"
+            )}
           </Grid>
           <Grid item>
             <NumberFormat
@@ -95,11 +98,11 @@ class CreateLicensePlates extends Component {
               format="##B-###.##"
               label="Biển số xe"
               name="licensePlates"
-              value={this.state.licensePlates}
+              value={licensePlates}
               onChange={this.handleChange}
-              error={errors && errors.licensePlates ? true : false}
+              error={errors.licensePlates ? true : false}
               helperText={
-                errors && errors.licensePlates
+                errors.licensePlates
                   ? errors.licensePlates
                   : "Vui lòng nhập biển số xe"
               }
@@ -107,25 +110,19 @@ class CreateLicensePlates extends Component {
           </Grid>
 
           <Grid item>
-            <TextField
-              label="Giá Vé"
-              name="price"
-              value={this.state.price}
-              onChange={this.handleChange}
-              error={errors && errors.price ? true : false}
-              helperText={
-                errors && errors.price ? errors.price : "Vui lòng nhập giá vé"
-              }
-            />
+            {this.renderTextField(
+              "Giá Vé",
+              "price",
+              price,
+              errors.price,
+              "Vui lòng nhập giá vé"
+            )}
           </Grid>
           <Grid item>
             <form onSubmit={this.handleSubmit}>
               <Button
                 variant="contained"
                 type="submit"
-                disabled={
-                  !start || !end || !licensePlates || !price ? true : false
-                }
                 color={idPlates ? "primary" : "secondary"}
               >
                 {idPlates ? "Sửa chuyến xe" : "Tạo chuyến xe"}

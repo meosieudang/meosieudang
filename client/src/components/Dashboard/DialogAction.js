@@ -16,24 +16,14 @@ import moment from "moment";
 class DialogAction extends Component {
   state = {
     handle: "",
-    create_date: new Date(),
-    errors: null
+    create_date: new Date()
   };
 
   handleChangeDate = data => this.setState({ create_date: data });
 
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
-  componentDidUpdate(prevProps) {
-    const { msgError } = this.props;
-    if (msgError !== prevProps.msgError) {
-      if (msgError) {
-        this.setState({ errors: msgError });
-      } else {
-        this.setState({ errors: null });
-      }
-    }
-
+  componentDidUpdate() {
     if (this.props.open) {
       if (this.props.isAuthenticated) {
         this.props.handleClose();
@@ -56,8 +46,8 @@ class DialogAction extends Component {
   };
 
   render() {
-    const { open, handleClose } = this.props;
-    const { handle, create_date, errors } = this.state;
+    const { open, handleClose, msgError } = this.props;
+    const { handle, create_date } = this.state;
     return (
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>Thêm Chuyến Xe Mới</DialogTitle>
@@ -71,7 +61,7 @@ class DialogAction extends Component {
             align="center"
             color="secondary"
           >
-            {errors && errors.create_date ? errors.create_date : null}
+            {msgError.create_date ? msgError.create_date : null}
           </Typography>
           <Grid container spacing={16} alignItems="center" justify="center">
             <Grid item>
@@ -81,8 +71,8 @@ class DialogAction extends Component {
                 name="handle"
                 value={handle}
                 onChange={this.handleChange}
-                error={errors && errors.handle ? true : false}
-                helperText={errors && errors.handle ? errors.handle : null}
+                error={msgError.handle ? true : false}
+                helperText={msgError.handle ? msgError.handle : null}
               />
             </Grid>
             <Grid item>
@@ -97,7 +87,7 @@ class DialogAction extends Component {
         <DialogActions>
           <form onSubmit={this.onSubmit}>
             <Button color="primary" type="submit">
-              Subscribe
+              OK
             </Button>
             <Button onClick={handleClose} color="primary">
               Cancel

@@ -29,6 +29,7 @@ export const SHOW_UPDATE = "SHOW_UPDATE";
 export const CLOSE_UPDATE = "CLOSE_UPDATE";
 export const SHOW_DELETE = "SHOW_DELETE";
 export const CLOSE_DELETE = "CLOSE_DELETE";
+export const OPEN_DIALOG_CONFIRM = "OPEN_DIALOG_CONFIRM";
 
 // message
 export const MSG_UPDATE_SUCCESS = "Cập nhật thành công !";

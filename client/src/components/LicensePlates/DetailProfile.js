@@ -8,27 +8,13 @@ import {
 import {
   deleteLicensePlates,
   updateLicensePlates,
-  modalContent,
   closeDelete,
   closeAdd,
   closeUpdate
 } from "../../actions/platesAction";
 import { withRouter } from "react-router-dom";
-import {
-  Paper,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  CardHeader,
-  IconButton,
-  Link
-} from "@material-ui/core";
-import { Link as LinkRouter } from "react-router-dom";
+import { Paper, Grid, Typography } from "@material-ui/core";
 import CreateLicensePlates from "./CreateLicensePlates";
-import NumberFormat from "react-number-format";
-import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
-import EditIcon from "@material-ui/icons/Create";
 import { Spinner } from "../../StyledComponents/Spinner";
 import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
 import {
@@ -36,22 +22,17 @@ import {
   MSG_DELETE_SUCCESS,
   MSG_ADD_SUCCESS
 } from "../../actions/type";
+import PlatesList from "./PlatesList";
+import NumberFormat from "react-number-format";
 
 class DetailProfile extends Component {
   componentDidMount() {
     this.props.getProject(this.props.match.params.id);
   }
 
-  deleteLicensePlates = id => {
-    modalContent(
-      "Bạn có chắn chắn?",
-      "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!"
-    ).then(willDelete => {
-      if (willDelete) {
-        this.props.deleteLicensePlates(id);
-      }
-    });
-  };
+  renderSnackbar = (open, close, message) => (
+    <StyledSnackBars open={open} handleClose={close} message={message} />
+  );
 
   render() {
     const {
@@ -60,9 +41,7 @@ class DetailProfile extends Component {
       errors,
       plates,
       updateLicensePlates,
-      getPlates,
       isAuthenticated,
-      isLoading,
       isDelete,
       isAdd,
       isUpdate,
@@ -74,6 +53,10 @@ class DetailProfile extends Component {
     if (Object.keys(profiles).length === 0) return <Spinner />;
     return (
       <Paper style={{ padding: "2rem", paddingTop: "15vh" }}>
+        {this.renderSnackbar(isDelete, closeDelete, MSG_DELETE_SUCCESS)}
+        {this.renderSnackbar(isAdd, closeAdd, MSG_ADD_SUCCESS)}
+        {this.renderSnackbar(isUpdate, closeUpdate, MSG_UPDATE_SUCCESS)}
+
         <CreateLicensePlates
           profiles={profiles}
           addNewLicensePlates={addNewLicensePlates}
@@ -81,23 +64,6 @@ class DetailProfile extends Component {
           plates={plates}
           updateLicensePlates={updateLicensePlates}
           isAuthenticated={isAuthenticated}
-          isLoading={isLoading}
-        />
-
-        <StyledSnackBars
-          open={isDelete}
-          handleClose={() => closeDelete()}
-          message={MSG_DELETE_SUCCESS}
-        />
-        <StyledSnackBars
-          open={isAdd}
-          handleClose={() => closeAdd()}
-          message={MSG_ADD_SUCCESS}
-        />
-        <StyledSnackBars
-          open={isUpdate}
-          handleClose={() => closeUpdate()}
-          message={MSG_UPDATE_SUCCESS}
         />
 
         <Typography
@@ -108,51 +74,26 @@ class DetailProfile extends Component {
         >
           DANH SÁCH CHUYẾN XE NGÀY {profiles.create_date}
         </Typography>
+        <Typography variant="subheading" align="center" paragraph>
+          TỔNG TIỀN TRONG NGÀY {profiles.create_date}:{" "}
+          <Typography variant="title" color="secondary" inline>
+            <NumberFormat
+              value={this.props.total}
+              displayType={"text"}
+              thousandSeparator={true}
+              suffix={" VNĐ"}
+            />
+          </Typography>
+        </Typography>
 
         <Grid container spacing={16} justify="center">
           {profiles.profile.map(item => (
             <Grid item key={item._id}>
-              <Card>
-                <CardHeader
-                  style={{ padding: "5px 15px 0 15px" }}
-                  action={
-                    <>
-                      <IconButton onClick={() => getPlates(item)}>
-                        <EditIcon style={{ color: "#009688" }} />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => this.deleteLicensePlates(item._id)}
-                      >
-                        <RemoveIcon style={{ color: "#d32f2f" }} />
-                      </IconButton>
-                    </>
-                  }
-                  title={item.nameSeat}
-                />
-                <CardContent align="center">
-                  <Typography variant="h5" color="primary">
-                    {item.start} {" - "} {item.end}
-                  </Typography>
-                  <Typography variant="h6">
-                    Giá vé:{" "}
-                    <NumberFormat
-                      value={item.price}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      suffix={" VNĐ"}
-                    />
-                  </Typography>
-                  <Typography variant="h5" align="center" color="secondary">
-                    <Link
-                      color="secondary"
-                      component={LinkRouter}
-                      to={`/dashboard/detail/${item._id}`}
-                    >
-                      {item.licensePlates}
-                    </Link>
-                  </Typography>
-                </CardContent>
-              </Card>
+              <PlatesList
+                item={item}
+                getPlates={this.props.getPlates}
+                deleteLicensePlates={this.props.deleteLicensePlates}
+              />
             </Grid>
           ))}
         </Grid>
@@ -166,10 +107,10 @@ const mapStateToProps = state => ({
   errors: state.error,
   plates: state.project.plates,
   isAuthenticated: state.project.isAuthenticated,
-  isLoading: state.project.isLoading,
   isDelete: state.project.isDelete,
   isAdd: state.project.isAdd,
-  isUpdate: state.project.isUpdate
+  isUpdate: state.project.isUpdate,
+  total: state.project.total
 });
 
 export default connect(

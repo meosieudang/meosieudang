@@ -1,4 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
+import {
+  getUser,
+  deleteSeat,
+  modalContent
+} from "../../../actions/platesAction";
+import styled from "styled-components";
 import {
   CardContent,
   Card,
@@ -8,13 +15,6 @@ import {
 } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
-import { connect } from "react-redux";
-import {
-  getUser,
-  deleteSeat,
-  modalContent
-} from "../../../actions/platesAction";
-import styled from "styled-components";
 
 const StyleCard = styled(props => <Card {...props} />)`
   width: 220px;
@@ -28,6 +28,12 @@ const StyleCard = styled(props => <Card {...props} />)`
   }
 `;
 
+const StyledTypography = styled(props => (
+  <Typography variant="h5" gutterBottom align="center" {...props} />
+))`
+  color: ${props => (props.textcolor ? "white" : "black")} !important;
+`;
+
 const StyledWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -35,29 +41,22 @@ const StyledWrap = styled.div`
   justify-content: center;
 `;
 
-const StyledTypography = styled(props => (
-  <Typography variant="h5" gutterBottom align="center" {...props} />
-))`
-  color: ${props => (props.textcolor ? "white" : "black")} !important;
-`;
-
-const Seat = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
+const SeatArray = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
   const getUserAndOpenModal = user => {
     getUser(user);
     handleClickOpen();
   };
 
-  const handleDeleteSeat = id => {
+  const handleDelete = id => {
     modalContent(
-      "Bạn có muốn xóa khách hàng này ?",
-      "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!"
-    ).then(willDelete => {
-      if (willDelete) {
+      "Bạn có chắn chắn",
+      "Sau khi xóa dữ liệu khách hàng này sẽ không thể khôi phục!"
+    ).then(del => {
+      if (del) {
         deleteSeat(id);
       }
     });
   };
-
   return (
     <StyledWrap>
       {seatArray.map(item => (
@@ -70,7 +69,7 @@ const Seat = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
                   <EditIcon style={{ color: "#ffa000" }} />
                 </IconButton>
                 <IconButton
-                  onClick={() => handleDeleteSeat(item._id)}
+                  onClick={() => handleDelete(item._id)}
                   disabled={item.nameUser ? false : true}
                 >
                   <RemoveIcon style={{ color: "#d32f2f" }} />
@@ -96,4 +95,4 @@ const Seat = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
 export default connect(
   null,
   { getUser, deleteSeat }
-)(Seat);
+)(SeatArray);

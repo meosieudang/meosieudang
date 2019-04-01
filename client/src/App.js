@@ -11,7 +11,7 @@ import Register from "./components/auth/Register";
 import DetailProfile from "./components/LicensePlates/DetailProfile";
 import Navbar from "./components/Navbar/Navbar";
 import ListSeat from "./components/ListSeat/ListSeat";
-import Dashboardv2 from "./components/Dashboard/Dashboardv2";
+import Dashboard from "./components/Dashboard/Dashboard";
 import Diagram from "./components/Diagram/Diagram";
 import PrivateRoute from "./common/PrivateRoute";
 
@@ -44,7 +44,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Login} />
             <Route path="/register" component={Register} />
-            <PrivateRoute path="/dashboard" exact component={Dashboardv2} />
+            <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute
               path="/dashboard/:id"
               exact

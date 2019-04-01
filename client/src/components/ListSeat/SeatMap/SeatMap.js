@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import TabsList from "../TabsList";
 import SwipeableViews from "react-swipeable-views";
-import Seat from "./Seat";
 import CreateListSeat from "./CreateListSeat";
 import { connect } from "react-redux";
 import { addNewListSeat } from "../../../actions/platesAction";
+import SeatArray from "./SeatArray";
 
 class SeatMap extends Component {
   state = {
@@ -49,8 +49,8 @@ class SeatMap extends Component {
           label2="tầng trên"
         />
         <SwipeableViews index={value} onChangeIndex={this.handleChangeIndex}>
-          <Seat seatArray={seatDown} handleClickOpen={handleClickOpen} />
-          <Seat seatArray={seatUp} handleClickOpen={handleClickOpen} />
+          <SeatArray seatArray={seatDown} handleClickOpen={handleClickOpen} />
+          <SeatArray seatArray={seatUp} handleClickOpen={handleClickOpen} />
         </SwipeableViews>
       </>
     );
