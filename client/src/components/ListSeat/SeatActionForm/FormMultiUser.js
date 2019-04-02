@@ -66,7 +66,7 @@ class FormMultiUser extends Component {
           onChange={this.handleChange}
           name="phoneUser"
           value={phoneUser}
-          format="#### ### ####"
+          format="#### ### ###"
         />
         <form onSubmit={this.handleSubmitMulti}>
           <Button

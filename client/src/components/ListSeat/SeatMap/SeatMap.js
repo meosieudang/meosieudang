@@ -5,6 +5,8 @@ import CreateListSeat from "./CreateListSeat";
 import { connect } from "react-redux";
 import { addNewListSeat } from "../../../actions/platesAction";
 import SeatArray from "./SeatArray";
+import FormSearch from "../SeatActionForm/FormSearch";
+import { Typography } from "@material-ui/core";
 
 class SeatMap extends Component {
   state = {
@@ -28,7 +30,13 @@ class SeatMap extends Component {
 
   render() {
     const { value, numberSeat } = this.state;
-    const { seatDown, seatUp, handleClickOpen, errors } = this.props;
+    const {
+      seatDown,
+      seatUp,
+      handleClickOpen,
+      errors,
+      searchPhone
+    } = this.props;
 
     if (seatDown.length === 0)
       return (
@@ -47,10 +55,24 @@ class SeatMap extends Component {
           handleChange={this.handleChangeTabList}
           label1="tầng dưới"
           label2="tầng trên"
+          label3="tìm kiếm ghế"
         />
         <SwipeableViews index={value} onChangeIndex={this.handleChangeIndex}>
           <SeatArray seatArray={seatDown} handleClickOpen={handleClickOpen} />
           <SeatArray seatArray={seatUp} handleClickOpen={handleClickOpen} />
+          <div>
+            <FormSearch />
+            {Object.keys(searchPhone).length !== 0 ? (
+              <SeatArray
+                seatArray={this.props.searchPhone}
+                handleClickOpen={handleClickOpen}
+              />
+            ) : (
+              <Typography align="center" style={{ marginTop: "2rem" }}>
+                Không tìm thấy
+              </Typography>
+            )}
+          </div>
         </SwipeableViews>
       </>
     );
@@ -61,6 +83,7 @@ const mapStateToProps = state => ({
   detailProfile: state.project.detailProfile,
   seatDown: state.project.seatDown,
   seatUp: state.project.seatUp,
+  searchPhone: state.project.searchPhone,
   errors: state.error
 });
 

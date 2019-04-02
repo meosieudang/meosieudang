@@ -14,7 +14,7 @@ router.get(
   (req, res) => {
     Profile.find()
       .sort({ create_date: 1 })
-      .populate("profile", ["licensePlates"])
+      .populate("profile", ["seat", "price"])
       .then(profiles => {
         if (!profiles)
           return res.status(404).json({ msg: "Not Found Project" });
@@ -32,7 +32,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Profile.findById(req.params.id)
-      .populate("profile", ["licensePlates", "start", "end", "price", "seat"])
+      .populate("profile")
       .then(profile => res.json(profile));
   }
 );
@@ -80,7 +80,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Profile.findById(req.params.idProfile)
-      .populate("profile", ["licensePlates", "start", "end", "price", "seat"])
+      .populate("profile")
       .then(profile => {
         if (!profile) return res.status(404).json({ msg: "not found profile" });
 

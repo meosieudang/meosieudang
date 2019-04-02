@@ -1,6 +1,6 @@
 import React from "react";
 import ReactLoading from "react-loading";
-import { Typography, LinearProgress, Paper } from "@material-ui/core";
+import { Typography, Paper } from "@material-ui/core";
 
 const styles = {
   width: "100%",
@@ -42,8 +42,6 @@ export const SpinnerLoading = () => {
   return (
     <>
       <div style={styleLoading}>
-        <LinearProgress color="secondary" style={{ height: 6 }} />
-
         <div style={styleContent}>
           <Paper
             style={{

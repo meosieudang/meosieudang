@@ -125,7 +125,7 @@ router.put(
       { new: true }
     ).then(plates => {
       Profile.findById(plates.profile._id)
-        .populate("profile", ["licensePlates", "start", "end", "price", "seat"])
+        .populate("profile")
         .then(profile => {
           res.json(profile);
         });
@@ -158,7 +158,7 @@ router.delete(
   (req, res) => {
     Plates.findByIdAndDelete(req.params.idPlates).then(plates => {
       Profile.findById(plates.profile._id)
-        .populate("profile", ["licensePlates", "start", "end", "price", "seat"])
+        .populate("profile")
         .then(profile => {
           res.json(profile);
         });
@@ -252,7 +252,9 @@ router.put(
             "seat.$.isBook": dataSeat2.nameUser ? true : false
           },
           { new: true }
-        ).then(seatOld => res.json(seatOld));
+        )
+          .populate("profile")
+          .then(seatOld => res.json(seatOld));
       });
     });
   }

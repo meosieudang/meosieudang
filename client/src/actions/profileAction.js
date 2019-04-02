@@ -71,6 +71,12 @@ export const searchProject = query => ({
   payload: query
 });
 
+//SEARCH PHONE USER
+export const searchPhoneUser = query => ({
+  type: types.SEARCH_PHONE_USER,
+  payload: query
+});
+
 // Get seat
 export const getPlates = plates => ({
   type: types.GET_PLATES,

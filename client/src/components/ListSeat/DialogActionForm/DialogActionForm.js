@@ -140,7 +140,7 @@ class DialogSeat extends Component {
                 onChange={this.handleChange}
                 name="phoneUser"
                 value={phoneUser}
-                format="#### ### ####"
+                format="#### ### ###"
               />
             </Grid>
           </Grid>

@@ -1,17 +1,12 @@
 import React from "react";
-import {
-  TableCell,
-  Tooltip,
-  IconButton,
-  Typography,
-  Link
-} from "@material-ui/core";
+import { TableCell, Tooltip, IconButton, Link } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Visibility from "@material-ui/icons/Visibility";
 import { connect } from "react-redux";
 import { deleteProject } from "../../actions/profileAction";
 import { Link as LinkRouter } from "react-router-dom";
 import { modalContent } from "../../actions/platesAction";
+import NumberFormat from "react-number-format";
 
 const UserItem = ({ project, index, deleteProject }) => {
   const handleDelete = id => {
@@ -24,6 +19,9 @@ const UserItem = ({ project, index, deleteProject }) => {
       }
     });
   };
+  const total = project.profile
+    .map(item => item.seat.filter(seat => seat.isBook).length * item.price)
+    .reduce((a, b) => a + b, 0);
   return (
     <>
       <TableCell>{index + 1}</TableCell>
@@ -33,12 +31,13 @@ const UserItem = ({ project, index, deleteProject }) => {
           {project.create_date}
         </Link>
       </TableCell>
-      <TableCell>
-        {project.profile.map(item => (
-          <Typography noWrap gutterBottom key={item.licensePlates}>
-            {item.licensePlates}
-          </Typography>
-        ))}
+      <TableCell style={{ fontSize: "1rem" }}>
+        <NumberFormat
+          value={total}
+          displayType={"text"}
+          thousandSeparator={true}
+          suffix={" VNĐ"}
+        />
       </TableCell>
       <TableCell>
         <Tooltip title="Xem chi tiết">

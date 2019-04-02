@@ -55,7 +55,7 @@ const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
             {item.licensePlates}
           </Link>
         </Typography>
-        <Typography variant="h6">
+        <Typography variant="body2">
           Giá vé:{" "}
           <NumberFormat
             value={item.price}
@@ -64,8 +64,8 @@ const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
             suffix={" VNĐ"}
           />
         </Typography>
-        <Typography variant="h6">Đã đặt: {seatBook()}</Typography>
-        <Typography variant="h6">
+        <Typography variant="body2">Đã đặt: {seatBook()}</Typography>
+        <Typography variant="body2">
           Tổng tiền:{" "}
           <NumberFormat
             value={seatBook() * item.price}

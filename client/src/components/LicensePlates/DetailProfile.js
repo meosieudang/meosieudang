@@ -74,9 +74,9 @@ class DetailProfile extends Component {
         >
           DANH SÁCH CHUYẾN XE NGÀY {profiles.create_date}
         </Typography>
-        <Typography variant="subheading" align="center" paragraph>
+        <Typography variant="title" align="center" gutterBottom>
           TỔNG TIỀN TRONG NGÀY {profiles.create_date}:{" "}
-          <Typography variant="title" color="secondary" inline>
+          <Typography variant="title" color="secondary" inline paragraph>
             <NumberFormat
               value={this.props.total}
               displayType={"text"}

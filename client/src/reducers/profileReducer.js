@@ -13,7 +13,8 @@ const initialState = {
   seatDown: [],
   user: null,
   plates: null,
-  search: []
+  search: [],
+  searchPhone: []
 };
 
 const listSeat = (arr, value) =>
@@ -29,6 +30,15 @@ const total = arr => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.GET_ALL_PROJECT:
+      // const find = action.payload.filter(
+      //   item => item.create_date.indexOf("04-2019") !== -1
+      // );
+      // const total1 = find.map(item => {
+      //   return total(item);
+      // });
+      // console.log(total1);
+      // const result = total1.reduce((a, b) => a + b, 0);
+      // console.log(result);
       return {
         ...state,
         profiles: {},
@@ -68,6 +78,7 @@ export default (state = initialState, action) => {
     case types.GET_DETAIL_CAR:
       const seatDown = listSeat(action.payload.seat, "A");
       const seatUp = listSeat(action.payload.seat, "B");
+      // const
       return {
         ...state,
         detailProfile: action.payload,
@@ -91,7 +102,8 @@ export default (state = initialState, action) => {
         seatDown: seatDown1,
         seatUp: seatUp1,
         profiles: {},
-        isLoading: false
+        isLoading: false,
+        searchPhone: []
       };
 
     case types.ADD_MULTI_USER:
@@ -169,6 +181,16 @@ export default (state = initialState, action) => {
         search: [
           ...state.projects.filter(
             project => project.create_date.indexOf(action.payload) !== -1
+          )
+        ]
+      };
+
+    case types.SEARCH_PHONE_USER:
+      return {
+        ...state,
+        searchPhone: [
+          ...state.detailProfile.seat.filter(
+            item => item.phoneUser.indexOf(action.payload) !== -1
           )
         ]
       };

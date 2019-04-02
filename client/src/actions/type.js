@@ -21,6 +21,7 @@ export const DELETE_PLATES_SUCCESS = "DELETE_PLATES_SUCCESS";
 export const DELETE_SEAT_SUCCESS = "DELETE_SEAT_SUCCESS";
 export const DELETE_PROJECT_SUCCESS = "DELETE_PROJECT_SUCCESS";
 export const SEARCH_PROJECT = "SEARCH_PROJECT";
+export const SEARCH_PHONE_USER = "SEARCH_PHONE_USER";
 export const DELETE_LIST_SEAT_SUCCESS = "DELETE_LIST_SEAT_SUCCESS";
 export const LOADING = "LOADING";
 export const SHOW_ADD = "SHOW_ADD";
@@ -40,6 +41,6 @@ export const TITLES = [
   "STT",
   "Người tạo",
   "Ngày khởi hành",
-  "Biển số xe ",
+  "Doanh thu trong ngày",
   "Hành Động"
 ];
