@@ -7,6 +7,7 @@ import {
 } from "../actions/type";
 const initialState = {
   isAuthenticated: false,
+  isLoading: false,
   user: {},
   users: []
 };
@@ -17,7 +18,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: Object.keys(action.payload).length !== 0,
-        user: action.payload
+        user: action.payload,
+        isLoading: false
       };
     case LOG_OUT_USER:
       return {

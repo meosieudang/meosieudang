@@ -12,7 +12,6 @@ const initialState = {
   seatUp: [],
   seatDown: [],
   user: null,
-  plates: null,
   search: [],
   searchPhone: []
 };
@@ -30,19 +29,43 @@ const total = arr => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case types.GET_ALL_PROJECT:
-      // const find = action.payload.filter(
-      //   item => item.create_date.indexOf("04-2019") !== -1
-      // );
-      // const total1 = find.map(item => {
-      //   return total(item);
-      // });
-      // console.log(total1);
-      // const result = total1.reduce((a, b) => a + b, 0);
-      // console.log(result);
       return {
         ...state,
-        profiles: {},
-        projects: action.payload
+        projects: action.payload,
+        profiles: {}
+      };
+
+    case types.GET_PROJECTS:
+      return {
+        ...state,
+        showProject: action.data,
+        isLoading: false
+      };
+
+    case types.SHOW_REVENUE:
+      const tempProject = [...state.showProject];
+      const value = action.payload;
+      const revenue = [];
+      for (let i = 0; i < value.length; i++) {
+        const find = tempProject.filter(
+          item => item.create_date.indexOf(value[i]) !== -1
+        );
+        const totalMonth = find
+          .map(item => {
+            return total(item);
+          })
+          .reduce((a, b) => a + b, 0);
+        revenue.push(totalMonth);
+      }
+      // const datasets = revenue.map(item => item.revenue);
+      // const totalYear = revenue
+      //   .map(item => item.revenue)
+      //   .reduce((a, b) => a + b, 0);
+
+      return {
+        ...state,
+        revenue: revenue,
+        isLoading: false
       };
 
     case types.DELETE_PROJECT_SUCCESS:
@@ -57,12 +80,11 @@ export default (state = initialState, action) => {
     case types.DELETE_PLATES_SUCCESS:
       return {
         ...state,
-        plates: null,
-        search: [],
-        detailProfile: {},
-        isLoading: false,
         profiles: action.payload,
-        total: total(action.payload)
+        total: total(action.payload),
+        detailProfile: {},
+        search: [],
+        isLoading: false
       };
 
     case types.UPDATE_LICENSE_PLATES_SUCCESS:
@@ -78,7 +100,6 @@ export default (state = initialState, action) => {
     case types.GET_DETAIL_CAR:
       const seatDown = listSeat(action.payload.seat, "A");
       const seatUp = listSeat(action.payload.seat, "B");
-      // const
       return {
         ...state,
         detailProfile: action.payload,
@@ -109,7 +130,6 @@ export default (state = initialState, action) => {
     case types.ADD_MULTI_USER:
       return {
         ...state,
-        msg: action.payload,
         isLoading: true
       };
 

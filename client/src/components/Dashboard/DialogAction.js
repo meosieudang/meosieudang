@@ -29,8 +29,7 @@ class DialogAction extends Component {
         this.props.handleClose();
         this.setState({
           handle: "",
-          create_date: new Date(),
-          errors: null
+          create_date: new Date()
         });
       }
     }
@@ -40,7 +39,7 @@ class DialogAction extends Component {
     e.preventDefault();
     const newProject = {
       handle: this.state.handle,
-      create_date: moment(this.state.create_date._d).format("DD-MM-YYYY")
+      create_date: moment(this.state.create_date._d).format("DD/MM/YYYY")
     };
     this.props.addNewProject(newProject);
   };
@@ -49,7 +48,7 @@ class DialogAction extends Component {
     const { open, handleClose, msgError } = this.props;
     const { handle, create_date } = this.state;
     return (
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Thêm Chuyến Xe Mới</DialogTitle>
         <DialogContent>
           <DialogContentText style={{ marginBottom: 15 }}>

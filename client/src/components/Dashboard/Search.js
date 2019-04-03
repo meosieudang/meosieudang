@@ -1,14 +1,12 @@
 import React from "react";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField, Typography, Grid } from "@material-ui/core";
 
 const Search = ({ handleChange, search }) => {
   return (
-    <>
+    <Grid item>
       <TextField
         label="Tìm theo ngày..."
         type="search"
-        margin="normal"
-        className="ml-3"
         name="search"
         onChange={handleChange}
       />
@@ -19,7 +17,7 @@ const Search = ({ handleChange, search }) => {
           Object.keys(search).length
         } kết quả tìm thấy`}</Typography>
       )}
-    </>
+    </Grid>
   );
 };
 

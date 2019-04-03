@@ -16,6 +16,9 @@ const Navbar = ({ history, logOutUser, auth, isLoading }) => {
       <Button color="inherit" component={Link} to="/dashboard">
         Trang chủ
       </Button>
+      <Button color="inherit" component={Link} to="/revenue">
+        Doanh thu
+      </Button>
       <Avatar src={auth.user.avatar} alt="anh" />
       <Button color="inherit" onClick={() => logOut()}>
         Logout

@@ -3,7 +3,7 @@ import callAPI from "../ultils/callAPI";
 
 //get all project
 export const getAllProject = () => dispatch => {
-  callAPI("GET", "profiles", "", null, dispatch).then(res => {
+  callAPI("GET", "profiles", "", null).then(res => {
     dispatch({
       type: types.GET_ALL_PROJECT,
       payload: res.data
@@ -14,7 +14,7 @@ export const getAllProject = () => dispatch => {
 
 //get 1 project
 export const getProject = id => dispatch => {
-  callAPI("GET", "profiles", id, null, dispatch).then(res => {
+  callAPI("GET", "profiles", id, null).then(res => {
     dispatch({
       type: types.GET_PROFILE,
       payload: res.data
@@ -25,7 +25,7 @@ export const getProject = id => dispatch => {
 //add new project
 export const addNewProject = data => dispatch => {
   dispatch({ type: types.LOADING });
-  callAPI("POST", "profiles", "", data, dispatch)
+  callAPI("POST", "profiles", "", data)
     .then(res => {
       dispatch({ type: types.ADD_NEW_PROJECT_SUCCESS, payload: res.data });
       dispatch({ type: types.SHOW_ADD });
@@ -74,6 +74,22 @@ export const searchProject = query => ({
 //SEARCH PHONE USER
 export const searchPhoneUser = query => ({
   type: types.SEARCH_PHONE_USER,
+  payload: query
+});
+
+//REVENUE IN MONTH
+export const showProjects = () => dispatch => {
+  dispatch({ type: types.LOADING });
+  callAPI("GET", "profiles", "/", null).then(res => {
+    dispatch({
+      type: types.GET_PROJECTS,
+      data: res.data
+    });
+  });
+};
+
+export const showRevenue = query => ({
+  type: types.SHOW_REVENUE,
   payload: query
 });
 

@@ -31,6 +31,8 @@ export const CLOSE_UPDATE = "CLOSE_UPDATE";
 export const SHOW_DELETE = "SHOW_DELETE";
 export const CLOSE_DELETE = "CLOSE_DELETE";
 export const OPEN_DIALOG_CONFIRM = "OPEN_DIALOG_CONFIRM";
+export const SHOW_REVENUE = "SHOW_REVENUE";
+export const GET_PROJECTS = "GET_PROJECTS";
 
 // message
 export const MSG_UPDATE_SUCCESS = "Cập nhật thành công !";
@@ -39,8 +41,30 @@ export const MSG_ADD_SUCCESS = "Thêm thành công !";
 
 export const TITLES = [
   "STT",
-  "Người tạo",
   "Ngày khởi hành",
   "Doanh thu trong ngày",
+  "Người tạo",
   "Hành Động"
+];
+
+export const MONTHS = [];
+
+for (let i = 0; i < 12; i++) {
+  MONTHS.push(`Tháng ${i + 1}`);
+}
+
+export const BG_COLORS = [
+  "green",
+  "#ba68c8",
+  "#f06292",
+  "#e57373",
+  "#9575cd",
+  "#64b5f6",
+  "#4db6ac",
+  "#81c784",
+  "#dce775",
+  "#a1887f",
+  "#7986cb",
+  "#4fc3f7",
+  "#aed581"
 ];

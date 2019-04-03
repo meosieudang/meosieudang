@@ -8,14 +8,14 @@ import {
   searchProject
 } from "../../actions/profileAction";
 import { closeDelete, closeAdd } from "../../actions/platesAction";
+import { MSG_DELETE_SUCCESS, MSG_ADD_SUCCESS } from "../../actions/type";
 import { Paper, Typography, Grid, Fab, Tooltip } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import styled from "styled-components";
 import DialogAction from "./DialogAction";
 import Search from "./Search";
 import ProjectList from "./ProjectList";
 import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
-import { MSG_DELETE_SUCCESS, MSG_ADD_SUCCESS } from "../../actions/type";
+import styled from "styled-components";
 
 const StyledFab = styled(props => (
   <Fab size="large" classes={{ root: "root" }} {...props} />
@@ -111,8 +111,10 @@ class Dashboard extends Component {
 
         <Grid container>
           <Grid item xs={12}>
-            <Paper style={{ padding: "2%", margin: "0 2%" }}>
-              <Search handleChange={this.handleChange} search={search} />
+            <Paper style={{ padding: "2%", margin: "0 3%" }}>
+              <Grid container spacing={40} alignItems="center">
+                <Search handleChange={this.handleChange} search={search} />
+              </Grid>
               <ProjectList
                 search={search}
                 projects={projects}

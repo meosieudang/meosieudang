@@ -1,5 +1,11 @@
 import React from "react";
-import { TableCell, Tooltip, IconButton, Link } from "@material-ui/core";
+import {
+  TableCell,
+  Tooltip,
+  IconButton,
+  Link,
+  Typography
+} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Visibility from "@material-ui/icons/Visibility";
 import { connect } from "react-redux";
@@ -25,20 +31,24 @@ const UserItem = ({ project, index, deleteProject }) => {
   return (
     <>
       <TableCell>{index + 1}</TableCell>
-      <TableCell>{project.handle}</TableCell>
-      <TableCell style={{ fontSize: "1rem" }}>
+      <TableCell>
         <Link component={LinkRouter} to={`/dashboard/${project._id}`}>
-          {project.create_date}
+          <Typography variant="h6" color="secondary">
+            {project.create_date}
+          </Typography>
         </Link>
       </TableCell>
-      <TableCell style={{ fontSize: "1rem" }}>
-        <NumberFormat
-          value={total}
-          displayType={"text"}
-          thousandSeparator={true}
-          suffix={" VNĐ"}
-        />
+      <TableCell>
+        <Typography variant="h6" color="error">
+          <NumberFormat
+            value={total}
+            displayType={"text"}
+            thousandSeparator={true}
+            suffix={" VNĐ"}
+          />
+        </Typography>
       </TableCell>
+      <TableCell>{project.handle}</TableCell>
       <TableCell>
         <Tooltip title="Xem chi tiết">
           <IconButton component={LinkRouter} to={`/dashboard/${project._id}`}>

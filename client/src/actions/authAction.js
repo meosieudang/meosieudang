@@ -8,7 +8,8 @@ import {
   CLEAR_ERRORS,
   REGISTER_SUCCESS,
   GET_ALL_USERS,
-  DELETE_SUCCESS
+  DELETE_SUCCESS,
+  LOADING
 } from "../actions/type";
 
 //register user
@@ -32,6 +33,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 //login user
 export const loginUser = (data, history) => dispatch => {
+  dispatch({type: LOADING})
   axios
     .post("/api/users/login", data)
     .then(res => {

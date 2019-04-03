@@ -10,9 +10,7 @@ import {
 import { TITLES } from "../../actions/type";
 import { ItemRender, PaginationRender } from "./Pagination";
 
-const StyledDiv = styled(props => (
-  <div classes={{ root: "root" }} {...props} />
-))`
+const StyledDiv = styled(props => <div {...props} />)`
   overflow-x: auto;
 `;
 

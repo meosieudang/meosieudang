@@ -14,6 +14,7 @@ import ListSeat from "./components/ListSeat/ListSeat";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Diagram from "./components/Diagram/Diagram";
 import PrivateRoute from "./common/PrivateRoute";
+import Revenue from "./components/Revenue/Revenue";
 
 //check token
 if (localStorage.jwtToken) {
@@ -45,6 +46,7 @@ class App extends Component {
             <Route path="/" exact component={Login} />
             <Route path="/register" component={Register} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
+            <PrivateRoute path="/revenue" exact component={Revenue} />
             <PrivateRoute
               path="/dashboard/:id"
               exact

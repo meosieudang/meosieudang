@@ -37,6 +37,10 @@ class ListSeat extends Component {
     this.props.getDetailCar(this.props.match.params.id);
   }
 
+  renderSnackbar = (open, close, message) => (
+    <StyledSnackBars open={open} handleClose={close} message={message} />
+  );
+
   render() {
     const {
       detailProfile,
@@ -65,21 +69,9 @@ class ListSeat extends Component {
           addAndUpdateSeatDown={addAndUpdateSeatDown}
         />
 
-        <StyledSnackBars
-          open={isDelete}
-          handleClose={() => closeDelete()}
-          message={MSG_DELETE_SUCCESS}
-        />
-        <StyledSnackBars
-          open={isAdd}
-          handleClose={() => closeAdd()}
-          message={MSG_ADD_SUCCESS}
-        />
-        <StyledSnackBars
-          open={isUpdate}
-          handleClose={() => closeUpdate()}
-          message={MSG_UPDATE_SUCCESS}
-        />
+        {this.renderSnackbar(isDelete, closeDelete, MSG_DELETE_SUCCESS)}
+        {this.renderSnackbar(isUpdate, closeUpdate, MSG_UPDATE_SUCCESS)}
+        {this.renderSnackbar(isAdd, closeAdd, MSG_ADD_SUCCESS)}
 
         <Price detailProfile={detailProfile} />
 
@@ -104,7 +96,6 @@ class ListSeat extends Component {
 
 const mapStateToProps = state => ({
   detailProfile: state.project.detailProfile,
-  msgError: state.error,
   isAuthenticated: state.project.isAuthenticated,
   user: state.project.user,
   isDelete: state.project.isDelete,
