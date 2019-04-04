@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { showRevenue, showProjects } from "../../actions/profileAction";
 import Chart from "./Chart";
 import { MONTHS, BG_COLORS } from "../../actions/type";
-import { Spinner } from "../../StyledComponents/Spinner";
 class Revenue extends Component {
   state = {
     year: 2019,

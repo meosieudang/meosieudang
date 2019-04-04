@@ -14,20 +14,23 @@ import { Link as LinkRouter } from "react-router-dom";
 import { modalContent } from "../../actions/platesAction";
 import NumberFormat from "react-number-format";
 
-const UserItem = ({ project, index, deleteProject }) => {
-  const handleDelete = id => {
-    modalContent(
-      "Bạn có chắn chắn ?",
-      "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!"
-    ).then(del => {
-      if (del) {
-        deleteProject(id);
-      }
-    });
-  };
-  const total = project.profile
+const handleDelete = (id, action) => {
+  modalContent(
+    "Bạn có chắn chắn ?",
+    "Sau khi xóa, bạn sẽ không thể khôi phục dữ liệu này!"
+  ).then(del => {
+    if (del) {
+      action(id);
+    }
+  });
+};
+
+const totalMonths = arr =>
+  arr.profile
     .map(item => item.seat.filter(seat => seat.isBook).length * item.price)
     .reduce((a, b) => a + b, 0);
+
+const UserItem = ({ project, index, deleteProject }) => {
   return (
     <>
       <TableCell>{index + 1}</TableCell>
@@ -41,7 +44,7 @@ const UserItem = ({ project, index, deleteProject }) => {
       <TableCell>
         <Typography variant="h6" color="error">
           <NumberFormat
-            value={total}
+            value={totalMonths(project)}
             displayType={"text"}
             thousandSeparator={true}
             suffix={" VNĐ"}
@@ -57,7 +60,7 @@ const UserItem = ({ project, index, deleteProject }) => {
         </Tooltip>
 
         <Tooltip title="Xóa">
-          <IconButton onClick={() => handleDelete(project._id)}>
+          <IconButton onClick={() => handleDelete(project._id, deleteProject)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
