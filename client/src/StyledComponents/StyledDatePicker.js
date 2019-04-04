@@ -1,6 +1,9 @@
 import React from "react";
 import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
+import "moment/locale/vi";
+import moment from "moment";
+moment.locale("vi");
 
 const StyledDatePicker = ({ date, onChange, label }) => {
   return (
