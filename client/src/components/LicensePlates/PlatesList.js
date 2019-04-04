@@ -13,19 +13,19 @@ import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
 import { modalContent } from "../../actions/platesAction";
 
-const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
-  const handleDelete = id => {
-    modalContent(
-      "Bạn có chắn chắn",
-      "Dữ liệu này sẽ không thể khôi phục !"
-    ).then(del => {
+const handleDelete = (id, action) => {
+  modalContent("Bạn có chắn chắn", "Dữ liệu này sẽ không thể khôi phục !").then(
+    del => {
       if (del) {
-        deleteLicensePlates(id);
+        action(id);
       }
-    });
-  };
+    }
+  );
+};
 
-  const seatBook = () => item.seat.filter(seat => seat.isBook).length;
+const seatBook = arr => arr.seat.filter(seat => seat.isBook).length;
+
+const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
   return (
     <Card>
       <CardHeader
@@ -35,7 +35,9 @@ const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
             <IconButton onClick={() => getPlates(item)}>
               <EditIcon style={{ color: "#009688" }} />
             </IconButton>
-            <IconButton onClick={() => handleDelete(item._id)}>
+            <IconButton
+              onClick={() => handleDelete(item._id, deleteLicensePlates)}
+            >
               <RemoveIcon style={{ color: "#d32f2f" }} />
             </IconButton>
           </>
@@ -64,11 +66,11 @@ const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
             suffix={" VNĐ"}
           />
         </Typography>
-        <Typography variant="body2">Đã đặt: {seatBook()}</Typography>
+        <Typography variant="body2">Đã đặt: {seatBook(item)}</Typography>
         <Typography variant="body2">
           Tổng tiền:{" "}
           <NumberFormat
-            value={seatBook() * item.price}
+            value={seatBook(item) * item.price}
             displayType={"text"}
             thousandSeparator={true}
             suffix={" VNĐ"}

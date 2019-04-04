@@ -45,7 +45,6 @@ class Revenue extends Component {
   };
   render() {
     const { year, chartData } = this.state;
-    // if (Object.keys(this.props.projects).length === 0) return <Spinner />;
     return (
       <Paper style={{ padding: "0 2%", paddingTop: "15vh" }}>
         <Grid container justify="center" alignItems="flex-end" spacing={16}>

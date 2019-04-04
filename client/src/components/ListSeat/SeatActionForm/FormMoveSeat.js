@@ -2,6 +2,22 @@ import React from "react";
 import { Button, Typography } from "@material-ui/core";
 import Select from "react-select";
 
+const listOptions = (arr, isBook) => {
+  return arr.seat
+    .filter(item => item.isBook === isBook)
+    .map(item => ({ value: item._id, label: item.nameSeat }));
+};
+
+const listSeat = (value1, arr) =>
+  value1
+    ? arr.seat
+        .map(item => ({
+          value: item._id,
+          label: item.nameSeat
+        }))
+        .filter(item => item.value !== value1.value)
+    : [];
+
 const FormMoveSeat = ({
   selectMove1,
   selectMove2,
@@ -10,19 +26,6 @@ const FormMoveSeat = ({
   submitMove,
   data
 }) => {
-  const listOptions = (arr, isBook) => {
-    return arr.seat
-      .filter(item => item.isBook === isBook)
-      .map(item => ({ value: item._id, label: item.nameSeat }));
-  };
-  const listSeat = selectMove1
-    ? data.seat
-        .map(item => ({
-          value: item._id,
-          label: item.nameSeat
-        }))
-        .filter(item => item.value !== selectMove1.value)
-    : [];
   return (
     <div style={{ padding: 15 }}>
       <Typography variant="display1" align="center" gutterBottom>
@@ -39,7 +42,7 @@ const FormMoveSeat = ({
         placeholder="Vui lòng chọn ghế cần đổi"
         value={selectMove2}
         onChange={handleChangeMove2}
-        options={listSeat}
+        options={listSeat(selectMove1, data)}
       />
       <br />
       <form onSubmit={submitMove}>
