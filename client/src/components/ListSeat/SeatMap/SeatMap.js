@@ -11,7 +11,7 @@ import { Typography } from "@material-ui/core";
 class SeatMap extends Component {
   state = {
     value: 0,
-    numberSeat: 0
+    numberSeat: ""
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
