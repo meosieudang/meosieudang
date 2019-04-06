@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import PageDisplay from "./PageDisplay";
 
 class Paginate extends React.Component {
-  state = { offset: 0, page: 1, limit: 5 };
+  state = { offset: 0, page: 1, limit: 10 };
 
   handleClick(offset, page) {
     this.setState({ offset, page }, () =>
@@ -27,7 +27,7 @@ class Paginate extends React.Component {
         />
         <Pagination
           limit={projects.limit}
-          total={projects.total}
+          total={projects.totalDocs}
           offset={this.state.offset}
           size="large"
           onClick={(e, offset, page) => this.handleClick(offset, page)}

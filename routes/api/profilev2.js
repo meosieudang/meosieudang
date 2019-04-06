@@ -13,32 +13,15 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { page, limit } = req.query;
-    const limits = parseInt(limit) || 5;
-    const pages = limits * (parseInt(page) - 1);
 
-    Profile.find().then(profile => {
-      const total = profile.length;
-      if (total === 0)
-        return res
-          .status(404)
-          .json({ msg: "Dữ liệu rỗng. Vui lòng tạo mới dữ liệu!" });
-
-      Profile.find({}, ["handle", "create_date", "dateAt"])
-        .sort({ dateAt: -1 })
-        .populate("profile", ["seat", "price"])
-        .limit(limits)
-        .skip(pages || 0)
-        .then(profiles => {
-          if (!profiles)
-            return res.status(404).json({ msg: "Not Found Project" });
-
-          res.json({
-            docs: profiles,
-            total: total,
-            limit: limits
-          });
-        });
-    });
+    const options = {
+      sort: { dateAt: -1 },
+      select: ["handle", "create_date", "dateAt"],
+      populate: { path: "profile", select: ["seat", "price"] },
+      page: parseInt(page),
+      limit: parseInt(limit) || 10
+    };
+    Profile.paginate({}, options).then(profile => res.json(profile));
   }
 );
 
