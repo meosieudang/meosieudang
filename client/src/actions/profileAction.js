@@ -3,7 +3,6 @@ import callAPI from "../ultils/callAPI";
 
 //get all project
 export const getAllProject = (limit, page) => dispatch => {
-  dispatch({ type: types.LOADING });
   callAPI("GET", "profiles", `?limit=${limit}&page=${page}`, null)
     .then(res => {
       dispatch({

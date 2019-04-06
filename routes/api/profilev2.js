@@ -22,7 +22,8 @@ router.get(
         return res
           .status(404)
           .json({ msg: "Dữ liệu rỗng. Vui lòng tạo mới dữ liệu!" });
-      Profile.find()
+
+      Profile.find({}, ["handle", "create_date", "dateAt"])
         .sort({ dateAt: -1 })
         .populate("profile", ["seat", "price"])
         .limit(limits)
@@ -31,7 +32,11 @@ router.get(
           if (!profiles)
             return res.status(404).json({ msg: "Not Found Project" });
 
-          res.json({ docs: profiles, total: total, limit: limits });
+          res.json({
+            docs: profiles,
+            total: total,
+            limit: limits
+          });
         });
     });
   }
