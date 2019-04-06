@@ -16,7 +16,7 @@ import Price from "./Price";
 import SeatActionForm from "./SeatActionForm/SeatActionForm";
 import SeatMap from "./SeatMap/SeatMap";
 import DialogActionForm from "./DialogActionForm/DialogActionForm";
-import { Spinner } from "../../StyledComponents/Spinner";
+import Spinner from "../../StyledComponents/Spinner";
 import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
 import {
   MSG_DELETE_SUCCESS,

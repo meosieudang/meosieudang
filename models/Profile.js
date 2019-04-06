@@ -20,7 +20,11 @@ const ProfileSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "plates"
     }
-  ]
+  ],
+  dateAt: {
+    type: Date,
+    default: new Date()
+  }
 });
 
 module.exports = Profile = mongoose.model("profiles", ProfileSchema);

@@ -49,7 +49,7 @@ class Login extends Component {
             <Grid container spacing={16}>
               <Grid item xs={12}>
                 <StyledTextField
-                  full
+                  full="true"
                   autoFocus
                   bongpro="true"
                   label="Username"
@@ -61,7 +61,8 @@ class Login extends Component {
               </Grid>
               <Grid item xs={12}>
                 <StyledTextField
-                  full
+                  type="password"
+                  full="true"
                   label="Password"
                   onChange={this.handleChange}
                   name="password"

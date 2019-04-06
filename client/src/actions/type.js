@@ -68,3 +68,5 @@ export const BG_COLORS = [
   "#4fc3f7",
   "#aed581"
 ];
+
+export const PAGE_NUM_DISPLAY = ["5", "10", "15", "20"];

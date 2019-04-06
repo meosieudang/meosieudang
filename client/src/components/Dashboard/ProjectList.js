@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   Table,
@@ -8,70 +8,39 @@ import {
   TableBody
 } from "@material-ui/core";
 import { TITLES } from "../../actions/type";
-import { ItemRender, PaginationRender } from "./Pagination";
+import UserItem from "./UserItem";
 
 const StyledDiv = styled(props => <div {...props} />)`
   overflow-x: auto;
 `;
 
-class ProjectList extends Component {
-  state = {
-    openConfirm: false,
-    currentPage: 1,
-    todosPerPage: 5,
-    active: false
-  };
+const itemRender = (arr, action) =>
+  arr.map((project, i) => (
+    <TableRow key={project._id}>
+      <UserItem project={project} deleteProject={action} index={i} />
+    </TableRow>
+  ));
 
-  handleClick = event => {
-    this.setState({
-      currentPage: Number(event.target.id)
-    });
-  };
-
-  itemRender = (arr, currentPage, todosPerPage) => (
-    <ItemRender
-      currentPage={currentPage}
-      todosPerPage={todosPerPage}
-      arr={arr}
-    />
+const ProjectList = ({ projects, deleteProject, search }) => {
+  if (Object.keys(projects).length === 0) return [];
+  return (
+    <StyledDiv>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {TITLES.map((title, id) => (
+              <TableCell key={id}>{title}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {Object.keys(search).length === 0
+            ? itemRender(projects.docs, deleteProject)
+            : itemRender(search, deleteProject)}
+        </TableBody>
+      </Table>
+    </StyledDiv>
   );
-
-  paginateRender = (arr, currentPage, todosPerPage) => (
-    <PaginationRender
-      currentPage={currentPage}
-      todosPerPage={todosPerPage}
-      arr={arr}
-      handleClick={this.handleClick}
-    />
-  );
-
-  render() {
-    const { search, projects } = this.props;
-    const { currentPage, todosPerPage } = this.state;
-    return (
-      <>
-        <StyledDiv>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {TITLES.map((title, id) => (
-                  <TableCell key={id}>{title}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Object.keys(search).length === 0
-                ? this.itemRender(projects, currentPage, todosPerPage)
-                : this.itemRender(search, currentPage, todosPerPage)}
-            </TableBody>
-          </Table>
-        </StyledDiv>
-        {Object.keys(search).length === 0
-          ? this.paginateRender(projects, currentPage, todosPerPage)
-          : this.paginateRender(search, currentPage, todosPerPage)}
-      </>
-    );
-  }
-}
+};
 
 export default ProjectList;

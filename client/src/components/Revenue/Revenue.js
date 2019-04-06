@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, TextField, Button, Paper } from "@material-ui/core";
+import { Grid, TextField, Button, Paper, Typography } from "@material-ui/core";
 import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
 import { showRevenue, showProjects } from "../../actions/profileAction";
@@ -11,6 +11,9 @@ class Revenue extends Component {
     chartData: {}
   };
 
+  componentDidMount() {
+    this.props.showProjects();
+  }
   getData = () => {
     this.setState({
       chartData: {
@@ -30,9 +33,6 @@ class Revenue extends Component {
       this.getData();
     }
   }
-  componentDidMount() {
-    this.props.showProjects();
-  }
   onChange = e => this.setState({ [e.target.name]: e.target.value });
   onSubmit = e => {
     e.preventDefault();
@@ -47,6 +47,11 @@ class Revenue extends Component {
     const { year, chartData } = this.state;
     return (
       <Paper style={{ padding: "0 2%", paddingTop: "15vh" }}>
+        {this.props.msg ? (
+          <Typography variant="title" color="error" align="center" paragraph>
+            {this.props.msg.msg}
+          </Typography>
+        ) : null}
         <Grid container justify="center" alignItems="flex-end" spacing={16}>
           <Grid item>
             <NumberFormat
@@ -83,7 +88,8 @@ class Revenue extends Component {
 const mapStateToProps = state => ({
   revenue: state.project.revenue,
   chartData: state.project.chartData,
-  projects: state.project.projects
+  projects: state.project.showProject,
+  msg: state.error
 });
 
 export default connect(

@@ -12,15 +12,28 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Profile.find()
-      .sort({ create_date: 1 })
-      .populate("profile", ["seat", "price"])
-      .then(profiles => {
-        if (!profiles)
-          return res.status(404).json({ msg: "Not Found Project" });
+    const { page, limit } = req.query;
+    const limits = parseInt(limit) || 5;
+    const pages = limits * (parseInt(page) - 1);
 
-        res.json(profiles);
-      });
+    Profile.find().then(profile => {
+      const total = profile.length;
+      if (total === 0)
+        return res
+          .status(404)
+          .json({ msg: "Dữ liệu rỗng. Vui lòng tạo mới dữ liệu!" });
+      Profile.find()
+        .sort({ dateAt: -1 })
+        .populate("profile", ["seat", "price"])
+        .limit(limits)
+        .skip(pages || 0)
+        .then(profiles => {
+          if (!profiles)
+            return res.status(404).json({ msg: "Not Found Project" });
+
+          res.json({ docs: profiles, total: total, limit: limits });
+        });
+    });
   }
 );
 
@@ -60,7 +73,7 @@ router.post(
     //Check create_date exist
     Profile.findOne({ create_date: req.body.create_date }).then(profile => {
       if (profile) {
-        res.status(400).json({ create_date: "That Date already exists." });
+        res.status(400).json({ create_date: "Ngày khởi hành đã tồn tại" });
       } else {
         // create new user
         new Profile(profileField)

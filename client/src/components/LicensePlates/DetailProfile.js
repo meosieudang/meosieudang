@@ -15,7 +15,7 @@ import {
 import { withRouter } from "react-router-dom";
 import { Paper, Grid, Typography } from "@material-ui/core";
 import CreateLicensePlates from "./CreateLicensePlates";
-import { Spinner } from "../../StyledComponents/Spinner";
+import Spinner from "../../StyledComponents/Spinner";
 import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
 import {
   MSG_UPDATE_SUCCESS,

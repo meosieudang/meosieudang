@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, TextField, Paper } from "@material-ui/core";
 
-const CreateListSeat = ({ numberSeat, onChange, handleSubmit, errors }) => {
+const CreateListSeat = ({ onChange, handleSubmit, errors }) => {
   return (
     <Paper style={{ marginTop: 20, textAlign: "center", padding: 15 }}>
       <form onSubmit={handleSubmit}>
@@ -10,7 +10,6 @@ const CreateListSeat = ({ numberSeat, onChange, handleSubmit, errors }) => {
           label="Vui lòng nhập số ghế"
           onChange={onChange}
           name="numberSeat"
-          value={numberSeat}
           error={errors.numberSeat ? true : false}
           helperText={
             errors.numberSeat

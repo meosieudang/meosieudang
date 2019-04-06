@@ -13,7 +13,8 @@ const initialState = {
   seatDown: [],
   user: null,
   search: [],
-  searchPhone: []
+  searchPhone: [],
+  showProject: []
 };
 
 const listSeat = (arr, value) =>
@@ -32,7 +33,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         projects: action.payload,
-        profiles: {}
+        profiles: {},
+        search: [],
+        isLoading: false
       };
 
     case types.GET_PROJECTS:
@@ -43,7 +46,7 @@ export default (state = initialState, action) => {
       };
 
     case types.SHOW_REVENUE:
-      const tempProject = [...state.showProject];
+      const tempProject = [...state.showProject.docs];
       const value = action.payload;
       const revenue = [];
       for (let i = 0; i < value.length; i++) {
@@ -72,8 +75,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        projects: state.projects.filter(item => item._id !== action.idProject),
-        search: state.search.filter(item => item._id !== action.idProject)
+        projects: {
+          ...state.projects,
+          docs: state.projects.docs.filter(
+            item => item._id !== action.idProject
+          )
+        }
+        // search: state.search.filter(item => item._id !== action.idProject)
       };
 
     case types.GET_PROFILE:
@@ -136,7 +144,10 @@ export default (state = initialState, action) => {
     case types.ADD_NEW_PROJECT_SUCCESS:
       return {
         ...state,
-        projects: [action.payload, ...state.projects],
+        projects: {
+          ...state.projects,
+          docs: [action.payload, ...state.projects.docs]
+        },
         isAuthenticated: true,
         isLoading: false
       };
@@ -199,7 +210,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         search: [
-          ...state.projects.filter(
+          ...state.projects.docs.filter(
             project => project.create_date.indexOf(action.payload) !== -1
           )
         ]

@@ -2,14 +2,18 @@ import * as types from "./type";
 import callAPI from "../ultils/callAPI";
 
 //get all project
-export const getAllProject = () => dispatch => {
-  callAPI("GET", "profiles", "", null).then(res => {
-    dispatch({
-      type: types.GET_ALL_PROJECT,
-      payload: res.data
-    });
-    dispatch({ type: types.CLEAR_ERRORS });
-  });
+export const getAllProject = (limit, page) => dispatch => {
+  dispatch({ type: types.LOADING });
+  callAPI("GET", "profiles", `?limit=${limit}&page=${page}`, null)
+    .then(res => {
+      dispatch({
+        type: types.GET_ALL_PROJECT,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({ type: types.GET_ERRORS, payload: err.response.data })
+    );
 };
 
 //get 1 project
@@ -80,12 +84,16 @@ export const searchPhoneUser = query => ({
 //REVENUE IN MONTH
 export const showProjects = () => dispatch => {
   dispatch({ type: types.LOADING });
-  callAPI("GET", "profiles", "/", null).then(res => {
-    dispatch({
-      type: types.GET_PROJECTS,
-      data: res.data
-    });
-  });
+  callAPI("GET", "profiles", `?limit=5000`, null)
+    .then(res => {
+      dispatch({
+        type: types.GET_PROJECTS,
+        data: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({ type: types.GET_ERRORS, payload: err.response.data })
+    );
 };
 
 export const showRevenue = query => ({

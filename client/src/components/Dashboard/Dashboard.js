@@ -16,6 +16,7 @@ import Search from "./Search";
 import ProjectList from "./ProjectList";
 import StyledSnackBars from "../../StyledComponents/StyledSnackBars";
 import styled from "styled-components";
+import Paginate from "./Paginate";
 
 const StyledFab = styled(props => (
   <Fab size="large" classes={{ root: "root" }} {...props} />
@@ -109,20 +110,32 @@ class Dashboard extends Component {
             : "DANH SÁCH XE HIỆN TẠI RỖNG"}
         </Typography>
 
-        <Grid container>
-          <Grid item xs={12}>
-            <Paper style={{ padding: "2%", margin: "0 3%" }}>
-              <Grid container spacing={40} alignItems="center">
-                <Search handleChange={this.handleChange} search={search} />
-              </Grid>
+        <Paper style={{ padding: "2%", margin: "0 3%" }}>
+          {msgError ? (
+            <Typography variant="title" color="error" align="center" paragraph>
+              {msgError.msg}
+            </Typography>
+          ) : null}
+
+          <Grid container>
+            <Search handleChange={this.handleChange} search={search} />
+          </Grid>
+          <Grid container justify="center" spacing={24}>
+            <Grid item xs={12} md={10}>
               <ProjectList
                 search={search}
                 projects={projects}
                 deleteProject={this.props.deleteProject}
               />
-            </Paper>
+            </Grid>
+            <Grid item xs={12} md={10}>
+              <Paginate
+                projects={projects}
+                getAllProject={this.props.getAllProject}
+              />
+            </Grid>
           </Grid>
-        </Grid>
+        </Paper>
       </Fragment>
     );
   }

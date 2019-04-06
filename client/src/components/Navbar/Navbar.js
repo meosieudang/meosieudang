@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, Button, Avatar } from "@material-ui/core";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logOutUser } from "../../actions/authAction";
-import { SpinnerLoading } from "../../StyledComponents/Spinner";
+import Spinner from "../../StyledComponents/Spinner";
 
 const Navbar = ({ history, logOutUser, auth, isLoading }) => {
   const logOut = () => {
@@ -45,7 +45,7 @@ const Navbar = ({ history, logOutUser, auth, isLoading }) => {
           {auth.isAuthenticated ? authLink : guestLink}
         </Toolbar>
       </AppBar>
-      {isLoading ? <SpinnerLoading /> : null}
+      {isLoading ? <Spinner /> : null}
     </>
   );
 };
