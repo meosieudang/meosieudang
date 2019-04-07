@@ -21,7 +21,16 @@ router.get(
       page: parseInt(page),
       limit: parseInt(limit) || 10
     };
-    Profile.paginate({}, options).then(profile => res.json(profile));
+    Profile.paginate({}, options).then(profile => {
+      const newProfile = {
+        docs: profile.docs,
+        totalDocs: profile.totalDocs,
+        limit: profile.limit
+      };
+      if (newProfile.docs.length === 0)
+        return res.status(404).json({ msg: "Data empty" });
+      res.json(newProfile);
+    });
   }
 );
 

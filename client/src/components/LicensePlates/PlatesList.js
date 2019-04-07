@@ -27,7 +27,7 @@ const seatBook = arr => arr.seat.filter(seat => seat.isBook).length;
 
 const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
   return (
-    <Card>
+    <Card style={{ width: 270, height: 220 }}>
       <CardHeader
         style={{ padding: "5px 15px 0 15px" }}
         action={
