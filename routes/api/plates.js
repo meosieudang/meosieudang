@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
+const Promise = require("bluebird");
 const Plates = require("../../models/Plates");
 const Profile = require("../../models/Profile");
 const validateLicensePlates = require("../../validation/licensePlates");
@@ -39,7 +40,6 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { data, nameUser, phoneUser } = req.body;
-
     data.map(item => {
       Plates.updateOne(
         { "seat._id": item },
@@ -114,22 +114,20 @@ router.put(
     if (!isValid) {
       return res.status(400).json(errors);
     }
-
-    Plates.findByIdAndUpdate(
-      req.params.idPlates,
-      {
-        start: req.body.start,
-        end: req.body.end,
-        price: req.body.price
-      },
-      { new: true }
-    ).then(plates => {
-      Profile.findById(plates.profile._id)
+    Promise.all([
+      Plates.findByIdAndUpdate(
+        req.params.idPlates,
+        {
+          start: req.body.start,
+          end: req.body.end,
+          price: req.body.price
+        },
+        { new: true }
+      ).exec(),
+      Profile.findOne({ profile: req.params.idPlates })
         .populate("profile")
-        .then(profile => {
-          res.json(profile);
-        });
-    });
+        .exec()
+    ]).spread((val1, val2) => res.json(val2));
   }
 );
 

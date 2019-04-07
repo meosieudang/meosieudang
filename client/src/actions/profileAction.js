@@ -17,12 +17,16 @@ export const getAllProject = (limit, page) => dispatch => {
 
 //get 1 project
 export const getProject = id => dispatch => {
-  callAPI("GET", "profiles", id, null).then(res => {
-    dispatch({
-      type: types.GET_PROFILE,
-      payload: res.data
-    });
-  });
+  callAPI("GET", "profiles", id, null)
+    .then(res => {
+      dispatch({
+        type: types.GET_PROFILE,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({ type: types.GET_ERRORS, payload: err.response.data })
+    );
 };
 
 //add new project

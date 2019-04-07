@@ -15,6 +15,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Diagram from "./components/Diagram/Diagram";
 import PrivateRoute from "./common/PrivateRoute";
 import Revenue from "./components/Revenue/Revenue";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 //check token
 if (localStorage.jwtToken) {
@@ -54,6 +55,7 @@ class App extends Component {
             />
             <PrivateRoute path="/dashboard/detail/:id" component={ListSeat} />
             <PrivateRoute path="/diagram/:id" component={Diagram} />
+            <Route component={PageNotFound} />
           </Switch>
         </BrowserRouter>
       </Provider>

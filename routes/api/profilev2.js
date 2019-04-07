@@ -2,6 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 const Profile = require("../../models/Profile");
 const Plates = require("../../models/Plates");
+const Promise = require("bluebird");
 const validateProfile = require("../../validation/profile");
 const validateLicensePlates = require("../../validation/licensePlates");
 
@@ -43,7 +44,10 @@ router.get(
   (req, res) => {
     Profile.findById(req.params.id)
       .populate("profile")
-      .then(profile => res.json(profile));
+      .then(profile => {
+        res.json(profile);
+      })
+      .catch(() => res.status(404).json({ msg: "not found" }));
   }
 );
 
@@ -134,14 +138,11 @@ router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Plates.find({ profile: req.params.id }).then(plates => {
-      if (!plates) return res.status(404).json({ msg: "not found plates" });
-
-      Plates.deleteMany({ profile: req.params.id }).then(plates => {
-        Profile.findByIdAndDelete(req.params.id).then(profile => {
-          res.json({ msg: "success" });
-        });
-      });
+    Promise.all([
+      Plates.deleteMany({ profile: req.params.id }).exec(),
+      Profile.findByIdAndDelete(req.params.id).exec()
+    ]).then(() => {
+      res.json({ msg: "success" });
     });
   }
 );
