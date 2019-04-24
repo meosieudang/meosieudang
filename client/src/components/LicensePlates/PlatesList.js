@@ -2,14 +2,15 @@ import React from "react";
 import {
   Card,
   CardHeader,
-  IconButton,
   CardContent,
   Typography,
-  Link
+  Link,
+  Button,
+  Grid
 } from "@material-ui/core";
 import NumberFormat from "react-number-format";
 import { Link as LinkRouter } from "react-router-dom";
-import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
+import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Create";
 import Visibility from "@material-ui/icons/Visibility";
 import { modalContent } from "../../actions/platesAction";
@@ -28,31 +29,50 @@ const seatBook = arr => arr.seat.filter(seat => seat.isBook).length;
 
 const PlatesList = ({ item, getPlates, deleteLicensePlates, author }) => {
   return (
-    <Card style={{ width: 270 }}>
+    <Card>
       <CardHeader
-        style={{ padding: "5px 15px 0 15px" }}
         action={
-          <>
-            <IconButton
-              component={LinkRouter}
-              to={`/dashboard/detail/${item._id}`}
-            >
-              <Visibility style={{ color: "#ff5722" }} />
-            </IconButton>
+          <Grid container spacing={8}>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="small"
+                component={LinkRouter}
+                to={`/dashboard/detail/${item._id}`}
+              >
+                Chi tiết
+                <Visibility style={{ color: "#ff5722", marginLeft: 10 }} />
+              </Button>
+            </Grid>
 
             {author === "admin" && (
               <>
-                <IconButton onClick={() => getPlates(item)}>
-                  <EditIcon style={{ color: "#009688" }} />
-                </IconButton>
-                <IconButton
-                  onClick={() => handleDelete(item._id, deleteLicensePlates)}
-                >
-                  <RemoveIcon style={{ color: "#d32f2f" }} />
-                </IconButton>
+                <Grid item>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    size="small"
+                    onClick={() => getPlates(item)}
+                  >
+                    Sửa
+                    <EditIcon style={{ color: "#009688", marginLeft: 10 }} />
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    size="small"
+                    onClick={() => handleDelete(item._id, deleteLicensePlates)}
+                  >
+                    Xóa
+                    <DeleteIcon style={{ color: "#d32f2f", marginLeft: 10 }} />
+                  </Button>
+                </Grid>
               </>
             )}
-          </>
+          </Grid>
         }
         title={item.nameSeat}
       />

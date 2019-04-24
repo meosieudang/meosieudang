@@ -10,12 +10,10 @@ import {
   CardContent,
   Card,
   Typography,
-  IconButton,
   CardHeader,
-  Tooltip
+  Button,
+  Grid
 } from "@material-ui/core";
-import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
-import EditIcon from "@material-ui/icons/Create";
 
 const SeatArray = ({
   seatArray,
@@ -44,27 +42,32 @@ const SeatArray = ({
       {seatArray.map(item => (
         <StyleCard key={item._id} isbook={item.isBook ? "true" : undefined}>
           <CardHeader
-            style={{ padding: "5px 15px 0 15px" }}
             action={
-              author === "admin" ? (
-                <div style={{ display: "flex" }}>
-                  <Tooltip title="Sửa">
-                    <IconButton onClick={() => getUserAndOpenModal(item)}>
-                      <EditIcon style={{ color: "#ffa000" }} />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Xóa">
-                    <div>
-                      <IconButton
-                        onClick={() => handleDelete(item._id)}
-                        disabled={item.phoneUser ? false : true}
-                      >
-                        <RemoveIcon style={{ color: "#d32f2f" }} />
-                      </IconButton>
-                    </div>
-                  </Tooltip>
-                </div>
-              ) : null
+              author === "admin" && (
+                <Grid container spacing={8}>
+                  <Grid item>
+                    <Button
+                      style={{ backgroundColor: "green", color: "white" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => getUserAndOpenModal(item)}
+                    >
+                      Sửa
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="small"
+                      onClick={() => handleDelete(item._id)}
+                      disabled={item.phoneUser ? false : true}
+                    >
+                      Xóa
+                    </Button>
+                  </Grid>
+                </Grid>
+              )
             }
             title={item.nameSeat}
           />
@@ -97,10 +100,6 @@ const StyleCard = styled(props => <Card {...props} />)`
   margin: 10px;
   margin-top: 20px;
   background-color: ${props => (props.isbook ? "#1976d2 " : "")} !important;
-
-  @media screen and (max-width: 1024px) {
-    width: 180px;
-  }
 `;
 
 const StyledTypography = styled(props => (

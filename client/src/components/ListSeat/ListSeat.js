@@ -78,7 +78,7 @@ class ListSeat extends Component {
         <Paper style={{ backgroundColor: "#eeeeee", padding: 15 }}>
           <Grid container spacing={16} justify="space-between">
             {this.props.author === "admin" ? (
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={5}>
                 <SeatActionForm
                   detailProfile={detailProfile}
                   addMultiUser={addMultiUser}
@@ -86,7 +86,7 @@ class ListSeat extends Component {
                 />
               </Grid>
             ) : null}
-            <Grid item xs={12} md={this.props.author === "admin" ? 8 : 12}>
+            <Grid item xs={12} md={this.props.author === "admin" ? 7 : 12}>
               <SeatMap handleClickOpen={this.handleClickOpen} />
             </Grid>
           </Grid>
