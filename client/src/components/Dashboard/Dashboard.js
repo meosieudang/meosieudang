@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 import { connect } from "react-redux";
 import {
   getAllProject,
@@ -40,10 +40,9 @@ const StyledFab = styled(props => (
   }
 `;
 
-class Dashboard extends Component {
+class Dashboard extends PureComponent {
   state = {
-    open: false,
-    search: ""
+    open: false
   };
 
   handleClickOpen = () => this.setState({ open: true });
@@ -53,11 +52,6 @@ class Dashboard extends Component {
       this.props.closeDialog();
     });
   };
-
-  handleChange = e =>
-    this.setState({ [e.target.name]: e.target.value }, () =>
-      this.props.searchProject(this.state.search)
-    );
 
   componentDidMount() {
     this.props.getAllProject();
@@ -93,11 +87,13 @@ class Dashboard extends Component {
         {this.renderSnackbar(isDelete, closeDelete, MSG_DELETE_SUCCESS)}
         {this.renderSnackbar(isAdd, closeAdd, MSG_ADD_SUCCESS)}
 
-        <Tooltip title="Thêm project mới">
-          <StyledFab onClick={this.handleClickOpen}>
-            <AddIcon />
-          </StyledFab>
-        </Tooltip>
+        {this.props.author === "admin" && (
+          <Tooltip title="Thêm project mới">
+            <StyledFab onClick={this.handleClickOpen}>
+              <AddIcon />
+            </StyledFab>
+          </Tooltip>
+        )}
 
         <Typography
           align="center"
@@ -116,11 +112,10 @@ class Dashboard extends Component {
               {msgError.msg}
             </Typography>
           ) : null}
-
-          <Grid container>
-            <Search handleChange={this.handleChange} search={search} />
-          </Grid>
-          <Grid container justify="center" spacing={24}>
+          <Grid container justify="center" spacing={24} alignItems="center">
+            <Grid item xs={12} md={10}>
+              <Search searchProject={this.props.searchProject} />
+            </Grid>
             <Grid item xs={12} md={10}>
               <ProjectList
                 search={search}
@@ -147,7 +142,8 @@ const mapStateToProps = state => ({
   isAuthenticated: state.project.isAuthenticated,
   isDelete: state.project.isDelete,
   isAdd: state.project.isAdd,
-  search: state.project.search
+  search: state.project.search,
+  author: state.auth.user.author
 });
 
 export default connect(

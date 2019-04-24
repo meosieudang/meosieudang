@@ -1,22 +1,33 @@
-import React from "react";
-import { TextField, Typography, Grid } from "@material-ui/core";
+import React, { useState } from "react";
+import { Grid, Button } from "@material-ui/core";
+import StyledDatePicker from "../../StyledComponents/StyledDatePicker";
+import moment from "moment";
 
-const Search = ({ handleChange, search }) => {
+const Search = props => {
+  const [search, setSearch] = useState(new Date());
+
+  const handleChange = data => setSearch(data);
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const query = moment(search._d).format("DD/MM/YYYY");
+    props.searchProject(query);
+  };
+
   return (
-    <Grid item>
-      <TextField
-        label="Tìm theo ngày..."
-        type="search"
-        name="search"
-        onChange={handleChange}
-      />
-      {Object.keys(search).length < 0 ? (
-        <Typography>Không tìm thấy</Typography>
-      ) : (
-        <Typography>{`Có ${
-          Object.keys(search).length
-        } kết quả tìm thấy`}</Typography>
-      )}
+    <Grid container alignItems="flex-end" spacing={16}>
+      <Grid item>
+        <StyledDatePicker
+          onChange={handleChange}
+          date={search}
+          label="Ngày cần tìm..."
+        />
+      </Grid>
+      <Grid item>
+        <Button variant="contained" color="primary" onClick={onSubmit}>
+          Tìm
+        </Button>
+      </Grid>
     </Grid>
   );
 };

@@ -14,7 +14,7 @@ const CreateListSeat = ({ onChange, handleSubmit, errors }) => {
           helperText={
             errors.numberSeat
               ? errors.numberSeat
-              : "Vui lòng nhập số ghế trong khoảng 10 - 25"
+              : "Vui lòng nhập số ghế trong khoảng 20 - 30"
           }
         />
         <Button

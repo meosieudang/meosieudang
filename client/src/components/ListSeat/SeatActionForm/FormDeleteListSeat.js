@@ -42,4 +42,4 @@ const FormDeleteListSeat = ({ deleteListSeat, detailProfile }) => {
 export default connect(
   null,
   { deleteListSeat }
-)(FormDeleteListSeat);
+)(React.memo(FormDeleteListSeat));

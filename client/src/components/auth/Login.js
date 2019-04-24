@@ -44,7 +44,7 @@ class Login extends Component {
         <form onSubmit={this.onSubmit}>
           <StyledPaper>
             <Typography variant="display3" align="center">
-              Sign In
+              Đăng Nhập
             </Typography>
             <Grid container spacing={16}>
               <Grid item xs={12}>
@@ -52,7 +52,7 @@ class Login extends Component {
                   full="true"
                   autoFocus
                   bongpro="true"
-                  label="Username"
+                  label="Tài khoản"
                   onChange={this.handleChange}
                   name="email"
                   error={errors.email ? true : false}
@@ -63,7 +63,7 @@ class Login extends Component {
                 <StyledTextField
                   type="password"
                   full="true"
-                  label="Password"
+                  label="Mật khẩu"
                   onChange={this.handleChange}
                   name="password"
                   error={errors.password ? true : false}
@@ -78,7 +78,7 @@ class Login extends Component {
               >
                 <Grid item>
                   <Button variant="contained" color="primary" type="submit">
-                    Sign In
+                    Đăng nhập
                   </Button>
                 </Grid>
                 <Grid item>
@@ -87,7 +87,7 @@ class Login extends Component {
                     color="primary"
                     onClick={() => this.props.logOutUser()}
                   >
-                    Sign Up
+                    Đăng kí
                   </Button>
                 </Grid>
               </Grid>

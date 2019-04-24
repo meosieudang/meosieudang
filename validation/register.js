@@ -11,7 +11,7 @@ module.exports = function validateRegister(data) {
   if (!Validator.isLength(data.name, { min: 2, max: 20 }))
     errors.name = "Name must beetween 2 - 30";
 
-  if (!Validator.isEmail(data.email)) errors.email = "Email invalid";
+  // if (!Validator.isEmail(data.email)) errors.email = "Email invalid";
   if (!Validator.isLength(data.password, { min: 6, max: 30 }))
     errors.password = "Password a least is must 6 characters";
   if (Validator.isEmpty(data.name)) errors.name = "Name field is required";

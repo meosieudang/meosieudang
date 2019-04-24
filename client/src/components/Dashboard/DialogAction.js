@@ -4,7 +4,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  TextField,
   DialogActions,
   Button,
   Grid,
@@ -15,20 +14,16 @@ import moment from "moment";
 
 class DialogAction extends Component {
   state = {
-    handle: "",
     create_date: new Date()
   };
 
   handleChangeDate = data => this.setState({ create_date: data });
-
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   componentDidUpdate() {
     if (this.props.open) {
       if (this.props.isAuthenticated) {
         this.props.handleClose();
         this.setState({
-          handle: "",
           create_date: new Date()
         });
       }
@@ -38,7 +33,6 @@ class DialogAction extends Component {
   onSubmit = e => {
     e.preventDefault();
     const newProject = {
-      handle: this.state.handle,
       create_date: moment(this.state.create_date._d).format("DD/MM/YYYY")
     };
     this.props.addNewProject(newProject);
@@ -46,13 +40,13 @@ class DialogAction extends Component {
 
   render() {
     const { open, handleClose, msgError } = this.props;
-    const { handle, create_date } = this.state;
+    const { create_date } = this.state;
     return (
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Thêm Chuyến Xe Mới</DialogTitle>
         <DialogContent>
           <DialogContentText style={{ marginBottom: 15 }}>
-            Vui lòng nhập đầy đủ thông tin
+            Vui lòng chọn ngày xuất phát
           </DialogContentText>
           <Typography
             variant="subtitle1"
@@ -63,17 +57,6 @@ class DialogAction extends Component {
             {msgError.create_date ? msgError.create_date : null}
           </Typography>
           <Grid container spacing={16} alignItems="center" justify="center">
-            <Grid item>
-              <TextField
-                autoFocus
-                label="Người Tạo"
-                name="handle"
-                value={handle}
-                onChange={this.handleChange}
-                error={msgError.handle ? true : false}
-                helperText={msgError.handle ? msgError.handle : null}
-              />
-            </Grid>
             <Grid item>
               <StyledDatePicker
                 onChange={this.handleChangeDate}

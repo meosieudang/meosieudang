@@ -84,4 +84,4 @@ const Price = ({ detailProfile }) => {
   );
 };
 
-export default withRouter(Price);
+export default withRouter(React.memo(Price));

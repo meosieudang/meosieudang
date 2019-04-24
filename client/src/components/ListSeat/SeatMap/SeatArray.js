@@ -11,10 +11,85 @@ import {
   Card,
   Typography,
   IconButton,
-  CardHeader
+  CardHeader,
+  Tooltip
 } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
+
+const SeatArray = ({
+  seatArray,
+  handleClickOpen,
+  getUser,
+  deleteSeat,
+  author
+}) => {
+  const getUserAndOpenModal = user => {
+    getUser(user);
+    handleClickOpen();
+  };
+
+  const handleDelete = id => {
+    modalContent(
+      "Bạn có chắn chắn",
+      "Sau khi xóa dữ liệu khách hàng này sẽ không thể khôi phục!"
+    ).then(del => {
+      if (del) {
+        deleteSeat(id);
+      }
+    });
+  };
+  return (
+    <StyledWrap>
+      {seatArray.map(item => (
+        <StyleCard key={item._id} isbook={item.isBook ? "true" : undefined}>
+          <CardHeader
+            style={{ padding: "5px 15px 0 15px" }}
+            action={
+              author === "admin" ? (
+                <div style={{ display: "flex" }}>
+                  <Tooltip title="Sửa">
+                    <IconButton onClick={() => getUserAndOpenModal(item)}>
+                      <EditIcon style={{ color: "#ffa000" }} />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Xóa">
+                    <div>
+                      <IconButton
+                        onClick={() => handleDelete(item._id)}
+                        disabled={item.phoneUser ? false : true}
+                      >
+                        <RemoveIcon style={{ color: "#d32f2f" }} />
+                      </IconButton>
+                    </div>
+                  </Tooltip>
+                </div>
+              ) : null
+            }
+            title={item.nameSeat}
+          />
+          <CardContent style={{ padding: 0 }}>
+            <StyledTypography textcolor={item.nameUser ? "true" : "false"}>
+              {item.nameUser}
+            </StyledTypography>
+            <StyledTypography textcolor="true">
+              {item.phoneUser}
+            </StyledTypography>
+          </CardContent>
+        </StyleCard>
+      ))}
+    </StyledWrap>
+  );
+};
+
+const mapStateToProps = state => ({
+  author: state.auth.user.author
+});
+
+export default connect(
+  mapStateToProps,
+  { getUser, deleteSeat }
+)(SeatArray);
 
 const StyleCard = styled(props => <Card {...props} />)`
   width: 220px;
@@ -40,59 +115,3 @@ const StyledWrap = styled.div`
   flex-direction: row-reverse;
   justify-content: center;
 `;
-
-const SeatArray = ({ seatArray, handleClickOpen, getUser, deleteSeat }) => {
-  const getUserAndOpenModal = user => {
-    getUser(user);
-    handleClickOpen();
-  };
-
-  const handleDelete = id => {
-    modalContent(
-      "Bạn có chắn chắn",
-      "Sau khi xóa dữ liệu khách hàng này sẽ không thể khôi phục!"
-    ).then(del => {
-      if (del) {
-        deleteSeat(id);
-      }
-    });
-  };
-  return (
-    <StyledWrap>
-      {seatArray.map(item => (
-        <StyleCard key={item._id} isbook={item.isBook ? "true" : undefined}>
-          <CardHeader
-            style={{ padding: "5px 15px 0 15px" }}
-            action={
-              <>
-                <IconButton onClick={() => getUserAndOpenModal(item)}>
-                  <EditIcon style={{ color: "#ffa000" }} />
-                </IconButton>
-                <IconButton
-                  onClick={() => handleDelete(item._id)}
-                  disabled={item.nameUser ? false : true}
-                >
-                  <RemoveIcon style={{ color: "#d32f2f" }} />
-                </IconButton>
-              </>
-            }
-            title={item.nameSeat}
-          />
-          <CardContent style={{ padding: 0 }}>
-            <StyledTypography textcolor={item.nameUser ? "true" : "false"}>
-              {item.nameUser}
-            </StyledTypography>
-            <StyledTypography textcolor="true">
-              {item.phoneUser}
-            </StyledTypography>
-          </CardContent>
-        </StyleCard>
-      ))}
-    </StyledWrap>
-  );
-};
-
-export default connect(
-  null,
-  { getUser, deleteSeat }
-)(SeatArray);

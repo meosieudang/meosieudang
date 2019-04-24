@@ -43,7 +43,6 @@ export const TITLES = [
   "STT",
   "Ngày khởi hành",
   "Doanh thu trong ngày",
-  "Người tạo",
   "Hành Động"
 ];
 

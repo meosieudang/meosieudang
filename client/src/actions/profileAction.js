@@ -73,10 +73,17 @@ export const deleteProject = idProject => dispatch => {
 };
 
 //SEARCH PROJECT
-export const searchProject = query => ({
-  type: types.SEARCH_PROJECT,
-  payload: query
-});
+export const searchProject = query => dispatch => {
+  dispatch({ type: types.LOADING });
+  callAPI("GET", "profiles", `search?date=${query}`, null)
+    .then(res => {
+      dispatch({ type: types.SEARCH_PROJECT, payload: res.data });
+      dispatch({ type: types.CLEAR_ERRORS });
+    })
+    .catch(err =>
+      dispatch({ type: types.GET_ERRORS, payload: err.response.data })
+    );
+};
 
 //SEARCH PHONE USER
 export const searchPhoneUser = query => ({

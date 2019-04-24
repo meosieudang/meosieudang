@@ -80,8 +80,8 @@ export default (state = initialState, action) => {
           docs: state.projects.docs.filter(
             item => item._id !== action.idProject
           )
-        }
-        // search: state.search.filter(item => item._id !== action.idProject)
+        },
+        search: []
       };
 
     case types.GET_PROFILE:
@@ -209,11 +209,8 @@ export default (state = initialState, action) => {
     case types.SEARCH_PROJECT:
       return {
         ...state,
-        search: [
-          ...state.projects.docs.filter(
-            project => project.create_date.indexOf(action.payload) !== -1
-          )
-        ]
+        isLoading: false,
+        search: [action.payload]
       };
 
     case types.SEARCH_PHONE_USER:

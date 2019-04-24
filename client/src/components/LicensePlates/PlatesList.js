@@ -11,6 +11,7 @@ import NumberFormat from "react-number-format";
 import { Link as LinkRouter } from "react-router-dom";
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import EditIcon from "@material-ui/icons/Create";
+import Visibility from "@material-ui/icons/Visibility";
 import { modalContent } from "../../actions/platesAction";
 
 const handleDelete = (id, action) => {
@@ -25,25 +26,37 @@ const handleDelete = (id, action) => {
 
 const seatBook = arr => arr.seat.filter(seat => seat.isBook).length;
 
-const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
+const PlatesList = ({ item, getPlates, deleteLicensePlates, author }) => {
   return (
-    <Card style={{ width: 270, height: 220 }}>
+    <Card style={{ width: 270 }}>
       <CardHeader
         style={{ padding: "5px 15px 0 15px" }}
         action={
           <>
-            <IconButton onClick={() => getPlates(item)}>
-              <EditIcon style={{ color: "#009688" }} />
-            </IconButton>
             <IconButton
-              onClick={() => handleDelete(item._id, deleteLicensePlates)}
+              component={LinkRouter}
+              to={`/dashboard/detail/${item._id}`}
             >
-              <RemoveIcon style={{ color: "#d32f2f" }} />
+              <Visibility style={{ color: "#ff5722" }} />
             </IconButton>
+
+            {author === "admin" && (
+              <>
+                <IconButton onClick={() => getPlates(item)}>
+                  <EditIcon style={{ color: "#009688" }} />
+                </IconButton>
+                <IconButton
+                  onClick={() => handleDelete(item._id, deleteLicensePlates)}
+                >
+                  <RemoveIcon style={{ color: "#d32f2f" }} />
+                </IconButton>
+              </>
+            )}
           </>
         }
         title={item.nameSeat}
       />
+
       <CardContent align="center">
         <Typography variant="h5" color="primary">
           {item.start} {" - "} {item.end}
@@ -81,4 +94,4 @@ const PlatesList = ({ item, getPlates, deleteLicensePlates }) => {
   );
 };
 
-export default PlatesList;
+export default React.memo(PlatesList);

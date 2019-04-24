@@ -136,7 +136,7 @@ class DialogSeat extends Component {
               <NumberFormat
                 customInput={TextField}
                 fullWidth
-                label="Phone User"
+                label="Số điện thoại"
                 onChange={this.handleChange}
                 name="phoneUser"
                 value={phoneUser}
@@ -147,11 +147,7 @@ class DialogSeat extends Component {
         </DialogContent>
         <DialogActions>
           <form onSubmit={this.handleSubmit}>
-            <Button
-              color="primary"
-              type="submit"
-              disabled={!nameUser || !phoneUser ? true : false}
-            >
+            <Button color="primary" type="submit">
               {user && user.nameUser ? "Sửa dữ liệu" : "OK"}
             </Button>
             <Button onClick={handleClose} color="primary">

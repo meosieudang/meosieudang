@@ -30,7 +30,7 @@ const totalMonths = arr =>
     .map(item => item.seat.filter(seat => seat.isBook).length * item.price)
     .reduce((a, b) => a + b, 0);
 
-const UserItem = ({ project, index, deleteProject }) => {
+const UserItem = ({ project, index, deleteProject, author }) => {
   return (
     <>
       <TableCell>{index + 1}</TableCell>
@@ -51,25 +51,32 @@ const UserItem = ({ project, index, deleteProject }) => {
           />
         </Typography>
       </TableCell>
-      <TableCell>{project.handle}</TableCell>
       <TableCell>
         <Tooltip title="Xem chi tiết">
           <IconButton component={LinkRouter} to={`/dashboard/${project._id}`}>
-            <Visibility />
+            <Visibility style={{ color: "#009688" }} />
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Xóa">
-          <IconButton onClick={() => handleDelete(project._id, deleteProject)}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        {author === "admin" && (
+          <Tooltip title="Xóa">
+            <IconButton
+              onClick={() => handleDelete(project._id, deleteProject)}
+            >
+              <DeleteIcon style={{ color: "#f44336" }} />
+            </IconButton>
+          </Tooltip>
+        )}
       </TableCell>
     </>
   );
 };
 
+const mapStateToProps = state => ({
+  author: state.auth.user.author
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { deleteProject }
 )(UserItem);

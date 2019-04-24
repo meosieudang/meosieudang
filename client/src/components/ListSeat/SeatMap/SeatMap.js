@@ -38,7 +38,7 @@ class SeatMap extends Component {
       searchPhone
     } = this.props;
 
-    if (seatDown.length === 0)
+    if (seatDown.length === 0 && this.props.author === "admin")
       return (
         <CreateListSeat
           style={{ marginTop: 20 }}
@@ -84,7 +84,8 @@ const mapStateToProps = state => ({
   seatDown: state.project.seatDown,
   seatUp: state.project.seatUp,
   searchPhone: state.project.searchPhone,
-  errors: state.error
+  errors: state.error,
+  author: state.auth.user.author
 });
 
 export default connect(

@@ -29,7 +29,7 @@ const FormMoveSeat = ({
   return (
     <div style={{ padding: 15 }}>
       <Typography variant="display1" align="center" gutterBottom>
-        CHUYỂN GHẾ
+        CHUYỂN GIƯỜNG
       </Typography>
       <Select
         placeholder="Vui lòng chọn ghế hiện tại"
@@ -60,4 +60,4 @@ const FormMoveSeat = ({
   );
 };
 
-export default FormMoveSeat;
+export default React.memo(FormMoveSeat);

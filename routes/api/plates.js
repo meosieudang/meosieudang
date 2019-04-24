@@ -46,7 +46,7 @@ router.post(
         {
           "seat.$.nameUser": nameUser,
           "seat.$.phoneUser": phoneUser,
-          "seat.$.isBook": nameUser ? true : false
+          "seat.$.isBook": phoneUser ? true : false
         },
         { new: true }
       ).then(() => res.json({ msg: "Thêm thành công" }));
@@ -176,7 +176,7 @@ router.put(
       {
         "seat.$.nameUser": req.body.nameUser,
         "seat.$.phoneUser": req.body.phoneUser,
-        "seat.$.isBook": req.body.nameUser ? true : false
+        "seat.$.isBook": req.body.phoneUser ? true : false
       },
       { new: true }
     )
@@ -201,7 +201,7 @@ router.put(
       {
         "seat.$.nameUser": "",
         "seat.$.phoneUser": "",
-        "seat.$.isBook": req.body.nameUser ? true : false
+        "seat.$.isBook": req.body.phoneUser ? true : false
       },
       { new: true }
     )
@@ -236,7 +236,7 @@ router.put(
         {
           "seat.$.nameUser": findSeat1.nameUser,
           "seat.$.phoneUser": findSeat1.phoneUser,
-          "seat.$.isBook": findSeat1.nameUser ? true : false
+          "seat.$.isBook": findSeat1.phoneUser ? true : false
         },
         { new: true }
       ).then(seatNew => {
@@ -247,7 +247,7 @@ router.put(
           {
             "seat.$.nameUser": dataSeat2.nameUser,
             "seat.$.phoneUser": dataSeat2.phoneUser,
-            "seat.$.isBook": dataSeat2.nameUser ? true : false
+            "seat.$.isBook": dataSeat2.phoneUser ? true : false
           },
           { new: true }
         )

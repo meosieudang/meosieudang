@@ -34,7 +34,8 @@ router.post("/register", (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        avatar
+        avatar,
+        author: req.body.author
       });
 
       //hash password
@@ -74,13 +75,18 @@ router.post("/login", (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         //user matched
-        const payload = { id: user.id, name: user.name, avatar: user.avatar }; // create jwt payload
+        const payload = {
+          id: user.id,
+          name: user.name,
+          avatar: user.avatar,
+          author: user.author
+        }; // create jwt payload
 
         //jwt sign
         jwt.sign(
           payload,
           keys.secretOrKey,
-          { expiresIn: 3600 },
+          // { expiresIn: 3600 },
           (err, token) => {
             res.json({
               success: true,

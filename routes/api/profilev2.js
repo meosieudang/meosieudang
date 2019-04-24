@@ -6,6 +6,23 @@ const Promise = require("bluebird");
 const validateProfile = require("../../validation/profile");
 const validateLicensePlates = require("../../validation/licensePlates");
 
+// @route search api/profiles/
+// @desc  get 1 project
+// @access Public
+router.get(
+  "/search",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ create_date: req.query.date })
+      .populate("profile")
+      .then(profile => {
+        if (!profile) return res.status(404).json({ msg: "Không tìm thấy" });
+        res.json(profile);
+      })
+      .catch(() => res.status(404).json({ msg: "not found" }));
+  }
+);
+
 // @route get api/profiles/
 // @desc  get all project
 // @access Public
@@ -17,7 +34,7 @@ router.get(
 
     const options = {
       sort: { dateAt: -1 },
-      select: ["handle", "create_date", "dateAt"],
+      select: ["create_date", "dateAt"],
       populate: { path: "profile", select: ["seat", "price"] },
       page: parseInt(page),
       limit: parseInt(limit) || 10
@@ -68,7 +85,6 @@ router.post(
     //Get field
     const profileField = {};
     profileField.user = req.user.id;
-    if (req.body.handle) profileField.handle = req.body.handle;
     if (req.body.create_date) profileField.create_date = req.body.create_date;
 
     //Check create_date exist

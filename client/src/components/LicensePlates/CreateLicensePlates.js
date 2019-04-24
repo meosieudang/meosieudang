@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Paper, Grid, TextField, Button } from "@material-ui/core";
 import NumberFormat from "react-number-format";
 
-class CreateLicensePlates extends Component {
+class CreateLicensePlates extends PureComponent {
   state = {
     idPlates: "",
     start: "Gia Lai",
@@ -26,8 +26,8 @@ class CreateLicensePlates extends Component {
         idPlates: "",
         start: "",
         end: "",
-        licensePlates: "",
-        price: ""
+        licensePlates: "81B-011.84",
+        price: "250000"
       });
     }
   }

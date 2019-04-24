@@ -54,7 +54,7 @@ class FormMultiUser extends Component {
         />
         <TextField
           fullWidth
-          label="Name User"
+          label="Tên khách"
           onChange={this.handleChange}
           name="nameUser"
           value={nameUser}
@@ -62,7 +62,7 @@ class FormMultiUser extends Component {
         <NumberFormat
           customInput={TextField}
           fullWidth
-          label="Phone User"
+          label="Số điện thoại"
           onChange={this.handleChange}
           name="phoneUser"
           value={phoneUser}
@@ -74,9 +74,9 @@ class FormMultiUser extends Component {
             variant="contained"
             color="primary"
             style={{ display: "block", margin: "auto", marginTop: 15 }}
-            disabled={!selectedOption || !nameUser || !phoneUser ? true : false}
+            disabled={!selectedOption || !phoneUser ? true : false}
           >
-            Submit
+            OK
           </Button>
         </form>
       </Paper>

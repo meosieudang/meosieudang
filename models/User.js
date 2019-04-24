@@ -19,6 +19,10 @@ const UserSchema = new Schema({
   avatar: {
     type: String
   },
+  author: {
+    type: String,
+    default: "user"
+  },
   create_date: {
     type: Date,
     default: moment()

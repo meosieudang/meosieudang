@@ -21,17 +21,17 @@ const Navbar = ({ history, logOutUser, auth, isLoading }) => {
       </Button>
       <Avatar src={auth.user.avatar} alt="anh" />
       <Button color="inherit" onClick={() => logOut()}>
-        Logout
+        Đăng xuất
       </Button>
     </>
   );
   const guestLink = (
     <>
       <Button color="inherit" component={Link} to="/">
-        Login
+        Đăng nhập
       </Button>
 
-      <Button>Register</Button>
+      <Button>Đăng kí</Button>
     </>
   );
 

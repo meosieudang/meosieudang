@@ -77,14 +77,16 @@ class ListSeat extends Component {
 
         <Paper style={{ backgroundColor: "#eeeeee", padding: 15 }}>
           <Grid container spacing={16} justify="space-between">
-            <Grid item xs={12} md={4}>
-              <SeatActionForm
-                detailProfile={detailProfile}
-                addMultiUser={addMultiUser}
-                swapSeat={swapSeat}
-              />
-            </Grid>
-            <Grid item xs={12} md={8}>
+            {this.props.author === "admin" ? (
+              <Grid item xs={12} md={4}>
+                <SeatActionForm
+                  detailProfile={detailProfile}
+                  addMultiUser={addMultiUser}
+                  swapSeat={swapSeat}
+                />
+              </Grid>
+            ) : null}
+            <Grid item xs={12} md={this.props.author === "admin" ? 8 : 12}>
               <SeatMap handleClickOpen={this.handleClickOpen} />
             </Grid>
           </Grid>
@@ -100,7 +102,8 @@ const mapStateToProps = state => ({
   user: state.project.user,
   isDelete: state.project.isDelete,
   isAdd: state.project.isAdd,
-  isUpdate: state.project.isUpdate
+  isUpdate: state.project.isUpdate,
+  author: state.auth.user.author
 });
 
 export default connect(

@@ -57,14 +57,16 @@ class DetailProfile extends Component {
         {this.renderSnackbar(isAdd, closeAdd, MSG_ADD_SUCCESS)}
         {this.renderSnackbar(isUpdate, closeUpdate, MSG_UPDATE_SUCCESS)}
 
-        <CreateLicensePlates
-          profiles={profiles}
-          addNewLicensePlates={addNewLicensePlates}
-          errors={errors}
-          plates={plates}
-          updateLicensePlates={updateLicensePlates}
-          isAuthenticated={isAuthenticated}
-        />
+        {this.props.author === "admin" && (
+          <CreateLicensePlates
+            profiles={profiles}
+            addNewLicensePlates={addNewLicensePlates}
+            errors={errors}
+            plates={plates}
+            updateLicensePlates={updateLicensePlates}
+            isAuthenticated={isAuthenticated}
+          />
+        )}
 
         <Typography
           variant="display1"
@@ -93,6 +95,7 @@ class DetailProfile extends Component {
                 item={item}
                 getPlates={this.props.getPlates}
                 deleteLicensePlates={this.props.deleteLicensePlates}
+                author={this.props.author}
               />
             </Grid>
           ))}
@@ -110,7 +113,8 @@ const mapStateToProps = state => ({
   isDelete: state.project.isDelete,
   isAdd: state.project.isAdd,
   isUpdate: state.project.isUpdate,
-  total: state.project.total
+  total: state.project.total,
+  author: state.auth.user.author
 });
 
 export default connect(
