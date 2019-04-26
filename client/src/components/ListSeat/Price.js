@@ -58,7 +58,7 @@ const renderTitle = arr => {
 
 const Price = ({ detailProfile }) => {
   return (
-    <Paper style={{ marginBottom: "2rem" }}>
+    <Paper>
       <Grid container justify="space-around" alignItems="center">
         <Grid item>
           <Typography variant="h6" align="center">

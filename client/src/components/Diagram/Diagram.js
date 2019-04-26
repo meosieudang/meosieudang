@@ -18,12 +18,12 @@ class Diagram extends Component {
     const seatDown1 = this.sliceSeat(0, 15, detailProfile);
     const seatDown2 = this.sliceSeat(15, 17, detailProfile);
     const seatDown3 = this.sliceSeat(17, 22, detailProfile);
-    // const seatUp1 = this.sliceSeat(22, 37, detailProfile);
-    // const seatUp2 = this.sliceSeat(37, 39, detailProfile);
-    // const seatUp3 = this.sliceSeat(39, 44, detailProfile);
+    const seatUp1 = this.sliceSeat(22, 37, detailProfile);
+    const seatUp2 = this.sliceSeat(37, 39, detailProfile);
+    const seatUp3 = this.sliceSeat(39, 44, detailProfile);
     return (
       <Fragment>
-        <Typography variant="h6" align="center" style={{ margin: "10px 0" }}>
+        <Typography variant="h6" align="center" style={{ margin: "15vh 0" }}>
           SƠ ĐỒ PHƠI XE GIƯỜNG NẰM HƯNG THỊNH GIA LAI
         </Typography>
         <Grid container justify="space-around" style={{ marginBottom: 15 }}>
@@ -77,8 +77,12 @@ class Diagram extends Component {
             <Grid item style={{ margin: "0 18px" }}>
               <Card style={{ width: 280, padding: 10, height: 100 }}>
                 <Typography align="right">{seat.nameSeat}</Typography>
-                <Typography paragraph>Tên khách: {seat.nameUser}</Typography>
-                <Typography paragraph>SĐT: {seat.phoneUser}</Typography>
+                <Typography paragraph variant="title">
+                  Tên khách: {seat.nameUser}
+                </Typography>
+                <Typography gutterBottom variant="title">
+                  SĐT: {seat.phoneUser}
+                </Typography>
               </Card>
             </Grid>
           ))}
@@ -88,8 +92,67 @@ class Diagram extends Component {
             <Grid item>
               <Card style={{ width: 180, padding: 10, height: 100 }}>
                 <Typography align="right">{seat.nameSeat}</Typography>
-                <Typography paragraph>Tên khách: {seat.nameUser}</Typography>
-                <Typography paragraph>SĐT: {seat.phoneUser}</Typography>
+                <Typography paragraph variant="title">
+                  Tên khách: {seat.nameUser}
+                </Typography>
+                <Typography gutterBottom variant="title">
+                  SĐT: {seat.phoneUser}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <Grid
+          container
+          direction="row-reverse"
+          spacing={8}
+          justify="space-between"
+        >
+          {seatUp1.map(seat => (
+            <Grid item style={{ margin: "0 15px" }} key={seat._id}>
+              <Card style={{ width: 280, padding: 10 }}>
+                <Typography align="right">{seat.nameSeat}</Typography>
+                <Typography paragraph variant="title">
+                  Tên khách: {seat.nameUser}
+                </Typography>
+                <Typography gutterBottom variant="title">
+                  SĐT: {seat.phoneUser}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <Grid
+          container
+          direction="row-reverse"
+          spacing={8}
+          justify="space-between"
+        >
+          {seatUp2.map(seat => (
+            <Grid item style={{ margin: "0 18px" }}>
+              <Card style={{ width: 280, padding: 10, height: 100 }}>
+                <Typography align="right">{seat.nameSeat}</Typography>
+                <Typography paragraph variant="title">
+                  Tên khách: {seat.nameUser}
+                </Typography>
+                <Typography gutterBottom variant="title">
+                  SĐT: {seat.phoneUser}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <Grid container direction="row-reverse" spacing={8} justify="center">
+          {seatUp3.map(seat => (
+            <Grid item>
+              <Card style={{ width: 180, padding: 10, height: 100 }}>
+                <Typography align="right">{seat.nameSeat}</Typography>
+                <Typography paragraph variant="title">
+                  Tên khách: {seat.nameUser}
+                </Typography>
+                <Typography gutterBottom variant="title">
+                  SĐT: {seat.phoneUser}
+                </Typography>
               </Card>
             </Grid>
           ))}

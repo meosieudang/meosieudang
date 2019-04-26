@@ -56,6 +56,7 @@ class SeatMap extends Component {
           label1="tầng dưới"
           label2="tầng trên"
           label3="tìm kiếm ghế"
+          label4="Phơi xe"
         />
         <SwipeableViews index={value} onChangeIndex={this.handleChangeIndex}>
           <SeatArray seatArray={seatDown} handleClickOpen={handleClickOpen} />

@@ -2,7 +2,6 @@ import React from "react";
 import { Paper, Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import { deleteListSeat, modalContent } from "../../../actions/platesAction";
-import { Link } from "react-router-dom";
 
 const FormDeleteListSeat = ({ deleteListSeat, detailProfile }) => {
   const handleDelete = e => {
@@ -25,14 +24,6 @@ const FormDeleteListSeat = ({ deleteListSeat, detailProfile }) => {
       <form onSubmit={handleDelete}>
         <Button type="submit" variant="outlined" style={{ color: "#f44336" }}>
           Xóa Danh Sách Ghế
-        </Button>
-        <Button
-          component={Link}
-          to={`/diagram/${detailProfile._id}`}
-          variant="contained"
-          style={{ background: "#009688", color: "white", marginLeft: 15 }}
-        >
-          SƠ ĐỒ PHƠI XE
         </Button>
       </form>
     </Paper>

@@ -23,6 +23,7 @@ import {
   MSG_ADD_SUCCESS,
   MSG_UPDATE_SUCCESS
 } from "../../actions/type";
+import TableBook from "./SeatMap/TableBook";
 
 class ListSeat extends Component {
   state = {
@@ -74,6 +75,8 @@ class ListSeat extends Component {
         {this.renderSnackbar(isAdd, closeAdd, MSG_ADD_SUCCESS)}
 
         <Price detailProfile={detailProfile} />
+
+        <TableBook detailProfile={detailProfile} />
 
         <Paper style={{ backgroundColor: "#eeeeee", padding: 15 }}>
           <Grid container spacing={16} justify="space-between">
