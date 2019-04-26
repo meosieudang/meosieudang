@@ -17,7 +17,6 @@ import { connect } from "react-redux";
 const ListDiagram = props => {
   if (Object.keys(props.detailProfile).length === 0)
     return <Redirect to="/dashboard" />;
-  console.log("render");
   const data = props.detailProfile.seat.filter(item => item.isBook === true);
   const list = data.reduce((v, i) => {
     let findPhone = v.filter(item => item.phone === i.phoneUser)[0];
