@@ -5,7 +5,6 @@ import SwipeableViews from "react-swipeable-views";
 import FormMultiUser from "./FormMultiUser";
 import FormMoveSeat from "./FormMoveSeat";
 import FormDeleteListSeat from "./FormDeleteListSeat";
-import { modalContent } from "../../../actions/platesAction";
 
 class SeatActionForm extends Component {
   state = {
@@ -32,17 +31,10 @@ class SeatActionForm extends Component {
   submitMove = e => {
     e.preventDefault();
     const { selectMove1, selectMove2 } = this.state;
-    modalContent(
-      "Bạn có chắc chắn chuyển ghế ?",
-      "Dữ liệu thông tin khách hàng sẽ thay đổi!"
-    ).then(willSwap => {
-      if (willSwap) {
-        this.props.swapSeat(selectMove1.value, selectMove2.value);
-        this.setState({
-          selectMove1: null,
-          selectMove2: null
-        });
-      }
+    this.props.swapSeat(selectMove1.value, selectMove2.value);
+    this.setState({
+      selectMove1: null,
+      selectMove2: null
     });
   };
 

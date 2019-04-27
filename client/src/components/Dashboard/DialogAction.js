@@ -67,14 +67,12 @@ class DialogAction extends Component {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <form onSubmit={this.onSubmit}>
-            <Button color="primary" type="submit">
-              OK
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-          </form>
+          <Button color="primary" onClick={this.onSubmit}>
+            OK
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     );

@@ -13,7 +13,7 @@ class FormMultiUser extends Component {
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   handleSubmitMulti = e => {
-    e.preventDefault();
+    // e.preventDefault();
     const { selectedOption, nameUser, phoneUser } = this.state;
     const value = selectedOption.map(item => item.value);
     const newUser = {
@@ -29,6 +29,10 @@ class FormMultiUser extends Component {
       phoneUser: "",
       selectedOption: null
     });
+  };
+
+  onKeyUp = e => {
+    return e.keyCode === 13 && this.handleSubmitMulti();
   };
 
   listOptions = arr => {
@@ -60,6 +64,7 @@ class FormMultiUser extends Component {
           value={nameUser}
         />
         <NumberFormat
+          onKeyUp={this.onKeyUp}
           customInput={TextField}
           fullWidth
           label="Số điện thoại"
@@ -68,17 +73,16 @@ class FormMultiUser extends Component {
           value={phoneUser}
           format="#### ### ###"
         />
-        <form onSubmit={this.handleSubmitMulti}>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{ display: "block", margin: "auto", marginTop: 15 }}
-            disabled={!selectedOption || !phoneUser ? true : false}
-          >
-            OK
-          </Button>
-        </form>
+
+        <Button
+          onClick={this.handleSubmitMulti}
+          variant="contained"
+          color="primary"
+          style={{ display: "block", margin: "auto", marginTop: 15 }}
+          disabled={!selectedOption || !phoneUser ? true : false}
+        >
+          OK
+        </Button>
       </Paper>
     );
   }

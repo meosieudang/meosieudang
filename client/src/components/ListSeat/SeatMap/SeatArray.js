@@ -103,7 +103,7 @@ const StyleCard = styled(props => <Card {...props} />)`
 `;
 
 const StyledTypography = styled(props => (
-  <Typography variant="h5" gutterBottom align="center" {...props} />
+  <Typography variant="subtitle1" gutterBottom align="center" {...props} />
 ))`
   color: ${props => (props.textcolor ? "white" : "black")} !important;
 `;

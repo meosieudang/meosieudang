@@ -10,7 +10,6 @@ import {
   Grid
 } from "@material-ui/core";
 import NumberFormat from "react-number-format";
-import swal from "sweetalert";
 
 class DialogSeat extends Component {
   state = {
@@ -69,32 +68,26 @@ class DialogSeat extends Component {
     }
   }
 
-  confirmAction = (idSeat, data) => {
-    swal({
-      title: "Bạn có muốn thay đổi dữ liệu này?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true
-    }).then(willDelete => {
-      if (willDelete) {
-        this.props.addAndUpdateSeatDown(idSeat, data);
-      }
-    });
+  // confirmAction = (idSeat, data) => {
+  //   this.props.addAndUpdateSeatDown(idSeat, data);
+  // };
+
+  onKeyUp = e => {
+    if (e.keyCode === 13) {
+      return this.handleSubmit();
+    }
   };
 
   handleSubmit = e => {
-    e.preventDefault();
+    // e.preventDefault();
     const newUser = {
       nameSeat: this.state.nameSeat,
       nameUser: this.state.nameUser,
       phoneUser: this.state.phoneUser
     };
 
-    if (this.state.isBook) {
-      this.confirmAction(this.state.idSeat, newUser);
-    } else {
-      this.props.addAndUpdateSeatDown(this.state.idSeat, newUser);
-    }
+    this.props.addAndUpdateSeatDown(this.state.idSeat, newUser);
+
     this.props.handleClose();
   };
 
@@ -134,6 +127,7 @@ class DialogSeat extends Component {
             </Grid>
             <Grid item xs={12} md={12}>
               <NumberFormat
+                onKeyUp={this.onKeyUp}
                 customInput={TextField}
                 fullWidth
                 label="Số điện thoại"
@@ -146,14 +140,12 @@ class DialogSeat extends Component {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <form onSubmit={this.handleSubmit}>
-            <Button color="primary" type="submit">
-              {user && user.nameUser ? "Sửa dữ liệu" : "OK"}
-            </Button>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-          </form>
+          <Button color="primary" onClick={this.handleSubmit}>
+            {user && user.nameUser ? "Sửa dữ liệu" : "OK"}
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     );

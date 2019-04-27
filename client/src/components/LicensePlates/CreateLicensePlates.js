@@ -6,7 +6,7 @@ class CreateLicensePlates extends PureComponent {
   state = {
     idPlates: "",
     start: "Gia Lai",
-    end: "Hồ Chí Minh",
+    end: "Sài Gòn",
     licensePlates: "81B-011.84",
     price: "250000"
   };
