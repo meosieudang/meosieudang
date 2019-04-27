@@ -138,12 +138,14 @@ router.put(
   "/delete-list-seat",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Plates.findById(req.body.idPlates).then(plates => {
-      if (!plates) return res.status(404).json({ msg: "not found plates" });
+    Plates.findById(req.body.idPlates)
+      .populate("profile", ["create_date"])
+      .then(plates => {
+        if (!plates) return res.status(404).json({ msg: "not found plates" });
 
-      plates.seat = [];
-      plates.save().then(plates => res.json(plates));
-    });
+        plates.seat = [];
+        plates.save().then(plates => res.json(plates));
+      });
   }
 );
 
