@@ -1,138 +1,127 @@
-import React, { PureComponent } from "react";
+import React, { useState, useEffect } from "react";
 import { Paper, Grid, TextField, Button } from "@material-ui/core";
 import NumberFormat from "react-number-format";
 
-class CreateLicensePlates extends PureComponent {
-  state = {
-    idPlates: "",
-    start: "Gia Lai",
-    end: "Sài Gòn",
-    licensePlates: "81B-011.84",
-    price: "250000"
-  };
+const CreateLicensePlates = props => {
+  const [idPlates, setIdPlates] = useState("");
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
+  const [licensePlates, setLicensePlates] = useState("");
+  const [price, setPrice] = useState("");
 
-  componentWillReceiveProps(nextProps) {
-    const { plates } = nextProps;
-    if (nextProps && nextProps.plates) {
-      this.setState({
-        idPlates: plates._id,
-        start: plates.start,
-        end: plates.end,
-        licensePlates: plates.licensePlates,
-        price: plates.price
-      });
+  useEffect(() => {
+    const { plates } = props;
+    if (plates) {
+      setIdPlates(plates._id);
+      setStart(plates.start);
+      setEnd(plates.end);
+      setLicensePlates(plates.licensePlates);
+      setPrice(plates.price);
     } else {
-      this.setState({
-        idPlates: "",
-        start: "",
-        end: "",
-        licensePlates: "81B-011.84",
-        price: "250000"
-      });
+      setIdPlates("");
+      setStart("");
+      setEnd("");
+      setLicensePlates("81B-011.84");
+      setPrice("250000");
     }
-  }
+  }, [props.plates]);
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const { profiles, addNewLicensePlates, updateLicensePlates } = this.props;
+    const { profiles, addNewLicensePlates, updateLicensePlates } = props;
 
     const newLicensePlates = {
-      licensePlates: this.state.licensePlates,
-      start: this.state.start,
-      end: this.state.end,
-      price: this.state.price
+      licensePlates: licensePlates,
+      start: start,
+      end: end,
+      price: price
     };
-    if (this.state.idPlates) {
+    if (idPlates) {
       //edit
-      updateLicensePlates(newLicensePlates, this.state.idPlates);
+      updateLicensePlates(newLicensePlates, idPlates);
     } else {
       //add
       addNewLicensePlates(newLicensePlates, profiles._id);
     }
   };
 
-  renderTextField = (label, name, value, error, helperText) => (
+  const renderTextField = (label, name, value, setValue, error, helperText) => (
     <TextField
       label={label}
       name={name}
       value={value}
-      onChange={this.handleChange}
+      onChange={e => setValue(e.target.value)}
       error={error ? true : false}
       helperText={error ? error : helperText}
     />
   );
 
-  render() {
-    const { start, end, price, licensePlates, idPlates } = this.state;
-    const { errors, plates } = this.props;
-    return (
-      <Paper>
-        <Grid container spacing={16} justify="center" alignItems="center">
-          <Grid item>
-            {this.renderTextField(
-              "Điểm xuất phát",
-              "start",
-              start,
-              errors.start,
-              "Vui lòng nhập điểm xuất phát"
-            )}
-          </Grid>
-          <Grid item>
-            {this.renderTextField(
-              "Điểm đến",
-              "end",
-              end,
-              errors.end,
-              "Vui lòng nhập điểm đến"
-            )}
-          </Grid>
-          <Grid item>
-            <NumberFormat
-              disabled={plates ? true : false}
-              customInput={TextField}
-              type="text"
-              format="##B-###.##"
-              label="Biển số xe"
-              name="licensePlates"
-              value={licensePlates}
-              onChange={this.handleChange}
-              error={errors.licensePlates ? true : false}
-              helperText={
-                errors.licensePlates
-                  ? errors.licensePlates
-                  : "Vui lòng nhập biển số xe"
-              }
-            />
-          </Grid>
-
-          <Grid item>
-            {this.renderTextField(
-              "Giá Vé",
-              "price",
-              price,
-              errors.price,
-              "Vui lòng nhập giá vé"
-            )}
-          </Grid>
-          <Grid item>
-            <form onSubmit={this.handleSubmit}>
-              <Button
-                variant="contained"
-                type="submit"
-                color={idPlates ? "primary" : "secondary"}
-              >
-                {idPlates ? "Sửa chuyến xe" : "Tạo chuyến xe"}
-              </Button>
-            </form>
-          </Grid>
+  return (
+    <Paper>
+      <Grid container spacing={16} justify="center" alignItems="center">
+        <Grid item>
+          {renderTextField(
+            "Điểm xuất phát",
+            "start",
+            start,
+            setStart,
+            props.errors.start,
+            "Vui lòng nhập điểm xuất phát"
+          )}
         </Grid>
-      </Paper>
-    );
-  }
-}
+        <Grid item>
+          {renderTextField(
+            "Điểm đến",
+            "end",
+            end,
+            setEnd,
+            props.errors.end,
+            "Vui lòng nhập điểm đến"
+          )}
+        </Grid>
+        <Grid item>
+          <NumberFormat
+            disabled={props.plates ? true : false}
+            customInput={TextField}
+            type="text"
+            format="##B-###.##"
+            label="Biển số xe"
+            name="licensePlates"
+            value={licensePlates}
+            onChange={e => setLicensePlates(e.target.value)}
+            error={props.errors.licensePlates ? true : false}
+            helperText={
+              props.errors.licensePlates
+                ? props.errors.licensePlates
+                : "Vui lòng nhập biển số xe"
+            }
+          />
+        </Grid>
+
+        <Grid item>
+          {renderTextField(
+            "Giá Vé",
+            "price",
+            price,
+            setPrice,
+            props.errors.price,
+            "Vui lòng nhập giá vé"
+          )}
+        </Grid>
+        <Grid item>
+          <form onSubmit={handleSubmit}>
+            <Button
+              variant="contained"
+              type="submit"
+              color={idPlates ? "primary" : "secondary"}
+            >
+              {idPlates ? "Sửa chuyến xe" : "Tạo chuyến xe"}
+            </Button>
+          </form>
+        </Grid>
+      </Grid>
+    </Paper>
+  );
+};
 
 export default CreateLicensePlates;

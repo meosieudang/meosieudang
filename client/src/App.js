@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import { setCurrentUser } from "./actions/authAction";
@@ -36,32 +36,25 @@ if (localStorage.jwtToken) {
   //   window.location.href = "/";
   // }
 }
-
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <BrowserRouter>
-          <Navbar />
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/register" component={Register} />
-            <PrivateRoute path="/dashboard" exact component={Dashboard} />
-            <PrivateRoute path="/revenue" exact component={Revenue} />
-            <PrivateRoute
-              path="/dashboard/:id"
-              exact
-              component={DetailProfile}
-            />
-            <PrivateRoute path="/dashboard/detail/:id" component={ListSeat} />
-            <PrivateRoute path="/diagram/:id" component={Diagram} />
-            <PrivateRoute path="/list/:id" component={ListDiagram} />
-            <Route component={PageNotFound} />
-          </Switch>
-        </BrowserRouter>
-      </Provider>
-    );
-  }
-}
+const App = () => {
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/register" component={Register} />
+          <PrivateRoute path="/dashboard" exact component={Dashboard} />
+          <PrivateRoute path="/revenue" exact component={Revenue} />
+          <PrivateRoute path="/dashboard/:id" exact component={DetailProfile} />
+          <PrivateRoute path="/dashboard/detail/:id" component={ListSeat} />
+          <PrivateRoute path="/diagram/:id" component={Diagram} />
+          <PrivateRoute path="/list/:id" component={ListDiagram} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
+  );
+};
 
 export default App;

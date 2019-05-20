@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
   getProject,
@@ -25,85 +25,67 @@ import {
 import PlatesList from "./PlatesList";
 import NumberFormat from "react-number-format";
 
-class DetailProfile extends Component {
-  componentDidMount() {
-    this.props.getProject(this.props.match.params.id);
-  }
+const DetailProfile = props => {
+  useEffect(() => {
+    props.getProject(props.match.params.id);
+  }, []);
 
-  renderSnackbar = (open, close, message) => (
+  const renderSnackbar = (open, close, message) => (
     <StyledSnackBars open={open} handleClose={close} message={message} />
   );
+  if (Object.keys(props.profiles).length === 0) return <Spinner />;
+  return (
+    <Paper style={{ padding: "2rem", paddingTop: "15vh" }}>
+      {renderSnackbar(props.isDelete, props.closeDelete, MSG_DELETE_SUCCESS)}
+      {renderSnackbar(props.isAdd, props.closeAdd, MSG_ADD_SUCCESS)}
+      {renderSnackbar(props.isUpdate, props.closeUpdate, MSG_UPDATE_SUCCESS)}
 
-  render() {
-    const {
-      profiles,
-      addNewLicensePlates,
-      errors,
-      plates,
-      updateLicensePlates,
-      isAuthenticated,
-      isDelete,
-      isAdd,
-      isUpdate,
-      closeDelete,
-      closeAdd,
-      closeUpdate
-    } = this.props;
+      {props.author === "admin" && (
+        <CreateLicensePlates
+          profiles={props.profiles}
+          addNewLicensePlates={props.addNewLicensePlates}
+          errors={props.errors}
+          plates={props.plates}
+          updateLicensePlates={props.updateLicensePlates}
+          isAuthenticated={props.isAuthenticated}
+        />
+      )}
 
-    if (Object.keys(profiles).length === 0) return <Spinner />;
-    return (
-      <Paper style={{ padding: "2rem", paddingTop: "15vh" }}>
-        {this.renderSnackbar(isDelete, closeDelete, MSG_DELETE_SUCCESS)}
-        {this.renderSnackbar(isAdd, closeAdd, MSG_ADD_SUCCESS)}
-        {this.renderSnackbar(isUpdate, closeUpdate, MSG_UPDATE_SUCCESS)}
-
-        {this.props.author === "admin" && (
-          <CreateLicensePlates
-            profiles={profiles}
-            addNewLicensePlates={addNewLicensePlates}
-            errors={errors}
-            plates={plates}
-            updateLicensePlates={updateLicensePlates}
-            isAuthenticated={isAuthenticated}
+      <Typography
+        variant="display1"
+        align="center"
+        gutterBottom
+        style={{ marginTop: "3rem" }}
+      >
+        DANH SÁCH CHUYẾN XE NGÀY {props.profiles.create_date}
+      </Typography>
+      <Typography variant="title" align="center" gutterBottom>
+        TỔNG TIỀN TRONG NGÀY {props.profiles.create_date}:{" "}
+        <Typography variant="title" color="secondary" inline paragraph>
+          <NumberFormat
+            value={props.total}
+            displayType={"text"}
+            thousandSeparator={true}
+            suffix={" VNĐ"}
           />
-        )}
-
-        <Typography
-          variant="display1"
-          align="center"
-          gutterBottom
-          style={{ marginTop: "3rem" }}
-        >
-          DANH SÁCH CHUYẾN XE NGÀY {profiles.create_date}
         </Typography>
-        <Typography variant="title" align="center" gutterBottom>
-          TỔNG TIỀN TRONG NGÀY {profiles.create_date}:{" "}
-          <Typography variant="title" color="secondary" inline paragraph>
-            <NumberFormat
-              value={this.props.total}
-              displayType={"text"}
-              thousandSeparator={true}
-              suffix={" VNĐ"}
+      </Typography>
+
+      <Grid container spacing={16} justify="center">
+        {props.profiles.profile.map(item => (
+          <Grid item key={item._id}>
+            <PlatesList
+              item={item}
+              getPlates={props.getPlates}
+              deleteLicensePlates={props.deleteLicensePlates}
+              author={props.author}
             />
-          </Typography>
-        </Typography>
-
-        <Grid container spacing={16} justify="center">
-          {profiles.profile.map(item => (
-            <Grid item key={item._id}>
-              <PlatesList
-                item={item}
-                getPlates={this.props.getPlates}
-                deleteLicensePlates={this.props.deleteLicensePlates}
-                author={this.props.author}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Paper>
-    );
-  }
-}
+          </Grid>
+        ))}
+      </Grid>
+    </Paper>
+  );
+};
 
 const mapStateToProps = state => ({
   profiles: state.project.profiles,
